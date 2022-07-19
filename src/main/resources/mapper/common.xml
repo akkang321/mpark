@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="common">
+
+     <sql id="stratPage">
+		<![CDATA[
+   			SELECT * FROM (
+ 		]]>
+ 	</sql>
+
+    <sql id="endPage">
+ 		<![CDATA[
+ 				) XXX
+			LIMIT #{S_CNT} , #{E_CNT} 
+ 		]]>
+ 	</sql>
+
+</mapper>
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.admin.bbs.dao.AdminBbsNoticeDao"> 
+
+<select id="bbsNoticeList" parameterType="hashmap" resultType="hashmap"> 
+<include refid="common.stratPage" /> 
+	SELECT		TITLE			,CONTENTS			,CREATE_ID								,DATE_FORMAT(CREATE_DATE,'%Y-%m-%d') AS CREATE_DATE 
+				,UPDATE_ID		,DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d') AS UPDATE_DATE		,BBS_TYPE		
+				,B_ID 
+	FROM 		BBS_INFO 
+	
+	WHERE 		BBS_TYPE='C160100'
+
+	<if test="sTitle != null and sTitle != ''">
+		AND TITLE  LIKE CONCAT('%', #{sTitle}, '%') 
+	</if>
+
+<include refid="common.endPage" /> 
+</select> 
+
+
+<select id="bbsNoticeCnt" resultType="int"> 
+	SELECT		COUNT(1) 
+	FROM 		BBS_INFO 
+
+	WHERE 		BBS_TYPE='C160100' 
+	
+	<if test="sTitle != null and sTitle != ''"> 
+		AND TITLE  LIKE CONCAT('%', #{sTitle}, '%') 
+	</if> 
+</select> 
+
+
+<select id="bbsNoticeInfo" parameterType="hashmap" resultType="hashmap"> 
+	SELECT		TITLE			,CONTENTS			,CREATE_ID								,DATE_FORMAT(CREATE_DATE,'%Y-%m-%d') AS CREATE_DATE 
+				,UPDATE_ID		,DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d') AS UPDATE_DATE		,BBS_TYPE 
+				,B_ID 
+	FROM 		BBS_INFO 
+
+	WHERE 		BBS_TYPE='C160100' 
+	AND			B_ID=#{ bId } 
+</select> 
+
+
+<insert id="bbsNoticeInsert" parameterType="hashmap"> 
+	INSERT INTO BBS_INFO(TITLE, CONTENTS, CREATE_ID, CREATE_DATE, BBS_TYPE) VALUES(#{title}, #{contents}, #{uId}, NOW(), 'C160100') 
+</insert> 
+
+
+<update id="bbsNoticeUpdate" parameterType="hashmap"> 
+	UPDATE BBS_INFO 
+	SET TITLE=#{title}, CONTENTS=#{contents}, UPDATE_ID=#{uId}, UPDATE_DATE=NOW() 
+	WHERE B_ID=#{ bId } 
+</update> 
+
+
+<delete id="bbsNoticeDelete" parameterType="hashmap"> 
+	DELETE 	FROM BBS_INFO 
+	WHERE 	B_ID=#{ bId } 
+</delete> 
+
+
+</mapper> 
+
+

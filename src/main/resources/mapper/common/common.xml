@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.common.dao.CommonDao">
+	<select id="teacherList" parameterType="String" resultType="hashmap">
+		SELECT	T_ID	,TEACHER_NAME
+		FROM	TEACHER_INFO
+	</select>
+	
+	<select id="nowYear" resultType="String">
+		SELECT DATE_FORMAT(NOW(),'%Y')
+	</select>
+	
+	<select id="nowMonth" resultType="String">
+		SELECT DATE_FORMAT(NOW(),'%m')
+	</select>
+	
+	<select id="nowDay" resultType="String">
+		SELECT DATE_FORMAT(NOW(),'%d')
+	</select>
+	
+	<select id="nowHour" resultType="String">
+		SELECT DATE_FORMAT(NOW(),'%H')
+	</select>
+	
+	<select id="nowMinute" resultType="String">
+		SELECT DATE_FORMAT(NOW(),'%i')
+	</select>
+	
+	<insert id="insertLog" parameterType="hashmap">
+		INSERT INTO LOGIN_LOG(U_ID, LOGIN_IP, LOGIN_DATE) VALUES(#{uId}, #{loginIp}, NOW()) 
+	</insert>
+	
+	<select id="userTicketCnt" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT 	IFNULL(SUM(NOW_TICKET_CNT),0) AS TICKET_CNT FROM TICKET_INFO T
+			WHERE 	DATE_FORMAT(EXPIRATION_DATE, '%Y%m%d') >= DATE_FORMAT(NOW(), '%Y%m%d')
+			AND		USE_STATE = 'C130100'
+			AND		U_ID = #{uId}
+			AND 	(SELECT C_PRICE_TYPE FROM CLASS_PRICE C WHERE C.C_P_ID = T.C_P_ID ) = 'C060100'
+		]]>
+	</select>
+</mapper>
+

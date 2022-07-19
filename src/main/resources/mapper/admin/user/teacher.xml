@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.admin.user.dao.AdminTeacherDao">
+
+	<select id="teacherList" resultType="hashmap">
+	<include refid="common.stratPage" />
+		SELECT 	T_ID, TEACHER_NAME, PHONE, EMAIL, TEACHER_STATE 
+				,FN_CODE_NAME(TEACHER_STATE) AS FN_TEACHER_STATE		,CREW_YN 
+		FROM 	TEACHER_INFO
+		<where>
+			<if test="sTId != null and sTId != ''">
+				AND T_ID LIKE CONCAT('%', #{sTId}, '%')
+			</if>
+			<if test="sTeacherName != null and sTeacherName != ''">
+				AND TEACHER_NAME LIKE CONCAT('%', #{sTeacherName}, '%') 
+			</if>
+		</where>
+	<include refid="common.endPage"/>
+	</select>
+
+	<select id="teacherCnt" parameterType="hashmap" resultType="int">
+		SELECT	COUNT(1) AS CNT
+		FROM 	TEACHER_INFO
+		<where>
+			<if test='sTId!=null and sTId!=""'>
+				AND T_ID LIKE CONCAT('%', #{sTId}, '%')
+			</if>
+			<if test='sTeacherName!=null and sTeacherName!=""'>
+				AND TEACHER_NAME LIKE CONCAT('%', #{sTeacherName}, '%')
+			</if>
+		</where>
+	</select>
+
+	<select id="checkTId" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(1) AS CNT
+		FROM 	TEACHER_INFO
+		WHERE 	T_ID=#{tId}
+	</select>
+
+	<insert id="teacherInsert" parameterType="hashmap">
+		INSERT	INTO	TEACHER_INFO
+				(
+					T_ID		,TEACHER_NAME		,PHONE	
+					,EMAIL		,VIDEO_URL			,TEACHER_STATE
+					,TEACHER_PW		,TEACHER_INTRODUCTION		,SELF_INTRODUCTION
+				)
+		VALUES	
+				(
+					#{tId}		,#{teacherName}		,#{phone}
+					,#{email}	,#{videoUrl}		,#{teacherState}
+					,#{pwInit}	,#{teacherIntroduction}		,#{selfIntroduction} 
+				)
+	</insert>
+
+	<select id="teacherInfo" resultType="hashmap" parameterType="String">
+		SELECT	T_ID			,TEACHER_NAME	,PHONE		,EMAIL
+				,TEACHER_STATE 	,VIDEO_URL		,PHOTO_ID
+				,FN_FILE_PATH(PHOTO_ID) AS PHOTO_PATH		,CREW_YN		,TEACHER_INTRODUCTION		,SELF_INTRODUCTION
+		FROM	TEACHER_INFO
+		WHERE 	T_ID = #{tId}
+	</select>
+
+	<update id="teacherPwInit" parameterType="hashmap">
+		UPDATE 	TEACHER_INFO
+		SET		TEACHER_PW = #{pwInit_t}
+		WHERE	T_ID = #{tId};
+	</update>
+
+	<update id="teacherUpdate" parameterType="hashmap">
+			UPDATE		TEACHER_INFO
+			SET			TEACHER_NAME = #{teacherName}		,PHONE = #{phone}			,EMAIL = #{email} 		,CREW_YN=#{crewYn}
+						,TEACHER_STATE = #{teacherState}	,VIDEO_URL = #{videoUrl}	,TEACHER_INTRODUCTION = #{teacherIntroduction}		,SELF_INTRODUCTION = #{selfIntroduction}
+			<if test="fileId != null and fileId != ''">
+				,PHOTO_ID = #{fileId}
+			</if>
+			WHERE 		T_ID=#{tId}
+	</update>
+
+	<delete id="teacherDelete" parameterType="hashmap">
+		DELETE 	FROM	TEACHER_INFO
+		WHERE 	T_ID = #{tId}
+	</delete>
+	
+	<delete id="fileInfoDelete" parameterType="hashmap">
+		DELETE	FROM	FILE_INFO
+		WHERE 	FILE_USE_ID = #{tId}
+	</delete>
+
+	<update id="teacherUpdateFileId" parameterType="hashmap">
+		UPDATE		TEACHER_INFO
+		SET			PHOTO_ID = #{fileId}
+		WHERE 		T_ID = #{tId}
+	</update>
+	
+	<select id="filePaths" parameterType="string" resultType="hashmap">
+		SELECT		FN_FILE_NAME(FILE_ID) AS FILE_NAME		,FN_FILE_PATH(FILE_ID) AS FILE_PATH, FILE_ID		,FILE_NAME	
+					,FILE_ORG_NAME		,FILE_SIZE			,FILE_TYPE		,FILE_IMAGE		
+					,FILE_USE_TABLE		,FILE_USE_ID 
+		FROM 		FILE_INFO 
+		WHERE 		FILE_USE_ID=#{tId}
+		AND			FILE_IMAGE='Y' 
+		AND 		FILE_ID NOT IN(
+									SELECT 		PHOTO_ID 
+									FROM 		TEACHER_INFO 
+									WHERE 		T_ID=#{tId}
+									);
+	</select>
+
+	<select id="videoPaths" parameterType="string" resultType="hashmap">
+		SELECT		FN_FILE_NAME(FILE_ID) AS FILE_NAME		,FN_FILE_PATH(FILE_ID) AS FILE_PATH		,FILE_ID		,FILE_NAME	
+					,FILE_ORG_NAME		,FILE_SIZE			,FILE_TYPE		,FILE_IMAGE		
+					,FILE_USE_TABLE		,FILE_USE_ID 
+		FROM 		FILE_INFO 
+		WHERE 		FILE_USE_ID = #{tId} 
+		AND 		FILE_IMAGE = 'N'
+	</select>
+
+	<select id="selectTeacherPath" parameterType="hashmap" resultType="string">
+		SELECT 		FN_FILE_PATH(PHOTO_ID) AS FILE_PATH
+		FROM		TEACHER_INFO
+		WHERE 		T_ID = #{tId}
+	</select>
+	
+	<select id="selectFilePath" parameterType="hashmap" resultType="hashmap">
+		SELECT 		CONCAT(FILE_PATH, '\\', FILE_NAME) AS FILE_PATH
+		FROM		FILE_INFO
+		WHERE 		FILE_USE_ID = #{tId}
+	</select>
+
+</mapper>
+
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.admin.user.dao.AdminAdminDao">
+
+	<select id="adminList" resultType="hashmap"> 
+		SELECT 		U_ID		,USER_NAME		,PHONE		,EMAIL
+		FROM 		USER_INFO
+		WHERE		USER_TYPE = 'C010100'
+	</select>
+	
+	<select id="adminInfo" resultType="hashmap" parameterType="hashmap"> 
+		SELECT 		U_ID		,USER_NAME		,PHONE
+					,EMAIL	
+		FROM 		USER_INFO
+		WHERE 		U_ID = #{uId}
+	</select>
+	
+	<select id="checkAdminId" parameterType="hashmap" resultType="int">
+		SELECT		COUNT(1) 
+		FROM 		USER_INFO
+		WHERE 		U_ID = #{uId}
+	</select>
+	
+	<insert id="adminInsert" parameterType="hashmap"> 
+		INSERT 	INTO USER_INFO 
+				(	
+					U_ID		,USER_NAME		,PHONE				,EMAIL 
+					,USER_PW	,USER_TYPE		,CREATE_DATE		,USER_STATE 
+				)
+		VALUES	
+				(
+					#{uId}			,#{userName}		,#{phone}		,#{email} 
+					,#{adminPw}		,'C010100'			,NOW()			,'C020100' 
+				)
+	</insert> 
+	
+	<update id="adminUpdate" parameterType="hashmap">
+		UPDATE		USER_INFO
+		SET			USER_NAME = #{userName}		,PHONE = #{phone} 
+					,EMAIL = #{email}			,UPDATE_DATE = NOW()		,UPDATE_ID = #{uId} 
+				<if test="userPw != null and userPw != ''"> 
+					,USER_PW = #{userPw} 
+				</if>
+		WHERE 		U_ID=#{uId}
+	</update>
+	
+	<delete id="adminDelete" parameterType="hashmap"> 
+		DELETE 	FROM	USER_INFO
+		WHERE 	U_ID = #{uId}
+	</delete>
+
+</mapper>
+
+

@@ -1,0 +1,671 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+* {box-sizing:border-box; outline:none;}
+html {
+    font-size: 62.5%;
+}
+body, html {margin:0; padding:0;}
+ul, ol, li, dl, dt, dd, p, h1, h2, h3, h3, h4, h5, h6, address, em, span, strong, div, header, nav, aside, section, article, footer, video, figure, figcaption {
+    font-weight:normal;
+    font-style:normal;
+    line-height:1.0;
+    font-size:100%;
+    margin:0; padding:0;
+    border:0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+a {
+    text-decoration:none !important;
+    color:#000;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+li {list-style:none;}
+table, tr, td, th {border-collapse:collapse;}
+th {font-weight:normal; text-align:left;}
+button {
+    cursor:pointer;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+fieldset {border:0; padding:0; margin:0;}
+legend {display:none;}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {display: block;}
+
+$main-color: #fff;
+$sub-color: #00ff84;
+$detail-width: 800px;
+
+$color1: #333;
+
+body {
+    background-color: $main-color;
+    padding-bottom: 10vh;
+}
+.inner {
+    width: 1400px;
+    margin: 0 auto;
+}
+header {
+    padding: 20px 0;
+    background-color: #000;
+    margin-bottom: 30px;
+    h1 {
+        a {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: $main-color
+        }
+    }
+}
+nav {
+    margin-bottom: 80px;
+    .tabs {
+        a {
+            display: inline-block;
+            padding: 15px 30px;
+            color: $color1;
+            font-size: 1.5rem;
+            font-weight: 500;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            transition: all .3s;
+            &:hover {
+                background: rgb(134, 134, 134);
+            }
+            &.active {
+                background: $color1;
+                color: $main-color;
+            }
+        }
+    }
+    .tabs-content {
+        .tab {
+            background-color: $color1;
+            display: none;
+            align-items: center;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            height: 65px;
+            &.active {
+                display: flex;
+            }
+            a {
+                font-size: 1.5rem;
+                display: inline-block;
+                padding: 25px 30px;
+                color: $main-color;
+                transition: all .3s;
+                &:hover {
+                    color: rgb(134, 134, 134);
+                }
+            }
+        }
+    }
+}
+
+@mixin searchBox($x) {
+    display: flex;
+    align-items: center;
+    width: $x;
+    margin-right: 30px;
+}
+@mixin searchBox-h2 {
+    color: $color1;
+    font-size: 1.5rem;
+    font-weight: 500;
+    width: 100px;
+}
+@mixin searchBox-input {
+    width: 180px;
+    height: 40px;
+    padding: 10px;
+    font-weight: 500;
+}
+@mixin searchBtn {
+    background: rgb(52, 152, 219);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 1.5rem;
+    width: 100px;
+    height: 40px;
+}
+
+.breadcrumb {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px 0 0 30px;
+    li {
+        a {
+            font-size: 1.3rem;
+            color: $color1;
+            text-decoration: underline !important;
+            font-weight: 300;
+            &.active {
+                font-weight: 500;
+            }
+        }
+    }
+    .slash {
+        margin: 0 5px;
+        color: $color1;
+    }
+}
+
+.modal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    left: 0;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0, .7);
+    &.display-hide {
+        display: none;
+    }
+    .click_hide_cover {
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        z-index: 3;
+    }
+    .inner2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: fixed;
+        z-index: 4;
+        input {
+            width: 400px;
+            height: 50px;
+            padding: 0 10px;
+            border: 0;
+        }
+        ul {
+            background: rgba(0,0,0, .5);
+            li {
+                color: #fff;
+                cursor: pointer;
+                font-size: 1.5rem;
+                font-weight: 400;
+                line-height: 1.4;
+                padding: 5px 10px;
+            }
+        }
+    }
+}
+
+.login {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h1 {
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: $color1;
+        margin-bottom: 30px;
+    }
+    div {
+        margin-bottom: 15px;
+        @include searchBox(300px);
+        h2 {
+            @include searchBox-h2();
+        }
+        input {
+            @include searchBox-input();
+            width: 220px;
+        }
+    }
+    button {
+        width: 300px;
+        background: rgb(52, 152, 219);
+        color: #fff;
+        border-radius: 3px;
+        padding: 10px 0;
+        margin-top: 10px;
+    }
+}
+
+
+.searchWrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    .searchBox {
+        @include searchBox(250px);
+        h2 {
+            @include searchBox-h2();
+        }
+        input {
+            @include searchBox-input();
+        }
+    }
+    .searchBtn {
+        @include searchBtn();
+    }
+}
+
+.tableWrap {
+    width: 100%;
+    margin-bottom: 50px;
+    tr {
+        th, td {
+            text-align: center;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            &:first-child {
+                border-left: 1px solid #ddd;
+            }
+        }
+        th {
+            height: 50px;
+            background: #eee;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #000;
+        }
+        td {
+            height: 50px;
+            background: #fff;
+            transition: all .3s;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #000;
+            &:hover {
+                background: #ddd;
+            }
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: #000;
+            }
+            button {
+                width: 50%;
+                height: 80%;
+                color: #fff;
+                background: rgb(52, 152, 219);
+                border-radius: 3px;
+            }
+        }
+    }
+}
+
+.pageNumberWrap {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button, .numberBox a {
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
+        border-radius: 3px;
+        background: #eee;
+        font-size: 1.5rem;
+        transition: all .3s;
+        &:hover {
+            background: rgb(52, 152, 219);
+            color: #fff;
+        }
+    }
+    button {
+        i {
+            font-size: 2rem;
+        }
+    }
+    .numberBox {
+        display: flex;
+        justify-content: space-between;
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &.active {
+                background: rgb(52, 152, 219);
+                color: #fff;
+            }
+                
+        }
+    }
+}
+
+
+
+
+.idBox {
+    width: 800px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto 20px;
+    h2 {
+        @include searchBox-h2();
+    }
+    p {
+        @include searchBox-input();
+        font-size: 2rem;
+    }
+}
+.searchWrap2 {
+    margin: 0 auto 50px;
+    width: $detail-width;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .searchBox {
+        @include searchBox(350px);
+        margin-bottom: 20px;
+        h2 {
+            @include searchBox-h2();
+        }
+        input {
+            @include searchBox-input();
+        }
+        select {
+            @include searchBox-input();
+        }
+    }
+    .searchBox2 {
+        display: flex;
+        .artist_searchBox {
+            display: flex;
+            align-items: center;
+        }
+        .artist_searchBtn {
+            position: relative;
+            left: -1px;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            background: rgb(52, 152, 219);
+            border-radius: 3px;
+        }
+    }
+    .textarea2 {
+        width: 100%;
+        textarea {
+            width: calc(100% - 100px);
+            padding: 10px;
+        }
+    }
+}
+.tableBox {
+    width: 800px;
+    display: flex;
+    margin: 0 auto;
+    h2 {
+        @include searchBox-h2();
+    }
+    .tableWrap {
+        tr {
+            th {
+                height: 35px;
+            }
+            td {
+                height: 35px;
+            }
+        }
+    }
+}
+
+
+.btnWrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+        padding: 10px 30px;
+        border-radius: 3px;
+        margin: 0 20px;
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 500;
+        &.confirmBtn {
+           background: rgb(52, 152, 219);
+        }
+        &.deleteBtn {
+            background: rgb(94, 94, 94);
+        }
+        &.cancelBtn {
+            background: rgb(224, 224, 224);
+            color: #000;
+        }
+    }
+}
+
+
+.chkWrap {
+    display: flex;
+    flex-direction: column;
+    width: $detail-width;
+    margin: 0 auto 50px;
+    .chkRow {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        h2 {
+            @include searchBox-h2();
+        }
+        .chkBox_row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 700px;
+            .chkBox {
+                margin-right: 30px;
+                cursor: pointer;
+                input {
+                    cursor: pointer;
+                }
+                label {
+                    font-size: 1.6rem;
+                    font-weight: 300;
+                    color: $color1;
+                    cursor: pointer;
+                }
+                padding: 5px 0;
+            }
+        }
+    }
+}
+.aspectWrap {
+    width: $detail-width;
+    margin: 0 auto 50px;
+    display: flex;
+    h2 {
+        @include searchBox-h2();
+    }
+    textarea {
+        width: 84%;
+        padding: 10px;
+    }
+}
+.explanationWrap {
+    @extend .aspectWrap;
+}
+.addImgWrap {
+    width: $detail-width;
+    margin: 0 auto 70px;
+    display: flex;
+    align-items: center;
+    .addBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        h2 {
+            @include searchBox-h2();
+        }
+        .btnBox {
+            display: flex;
+            flex-direction: column;
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+                background: rgb(224, 224, 224);
+                width: 80px;
+                height: 30px;
+                border-radius: 3px;
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+                text-align: center;
+                line-height: 30px;
+                cursor: pointer;
+                input {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    min-width: 100%;
+                    min-height: 100%;
+                    font-size: 100px;
+                    text-align: right;
+                    filter: alpha(opacity=0);
+                    opacity: 0;
+                    outline: none;
+                    background: white;
+                    cursor: inherit;
+                    display: block;
+                }
+            }
+            .btn-del {
+                cursor: pointer;
+                background: rgb(224, 224, 224);
+                width: 80px;
+                height: 30px;
+                border-radius: 3px;
+                font-size: 1.5rem;
+                text-align: center;
+                line-height: 30px;
+            }
+        }
+    }   
+    .imgBox {background: #ddd;
+        width: 250px;
+        height: 250px;
+        margin-left: 70px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 100%;
+        }
+    }
+}
+.searchWrap-270 {
+    justify-content: flex-start;
+    .searchBox {
+        @include searchBox(270px);
+    }
+}
+
+.newBtnBox {
+    display: flex;
+    justify-content: flex-end;
+    .newBtn {
+        @include searchBtn();
+        right: 250px;
+        bottom: 20px;
+    }
+}
+
+.addImgWrap2 {
+    margin-bottom: 40px;
+}
+.profileWrap {
+    width: $detail-width;
+    margin: 0 auto 50px;
+    display: flex;
+    justify-content: space-between;
+    h2 {
+        @include searchBox-h2();
+    }
+    textarea {
+        width: 84%;
+        padding: 10px;
+    }
+}
+
+.tableCover {
+    margin-bottom: 200px;
+    .tableWrap {
+        margin-bottom: 30px;
+    }
+}
+.searchWrap3 {
+    .searchBox h2 {
+        width: 70px;
+    }
+    select {
+        @include searchBox-input();
+    }
+}
+
+.searchWrap4 {
+    flex-wrap: wrap;
+    input {
+        margin: 15px 0;
+    }
+}
+.center-title-h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+}
+
+.searchWrap5 {
+    .artBox {
+        display: flex;
+        align-items: center;
+        margin-top: 50px;
+        .imgBox {
+            width: 250px;
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eee;
+            margin-right: 50px;
+            img {
+                width: 100%;
+            }
+        }
+        .txtBox {
+            .txtRow {
+                display: flex;
+                align-items: center;
+                margin-bottom: 8px;
+                h2 {
+                    @include searchBox-h2();
+                }
+                p {
+                    font-size: 1.4rem;
+                }
+            }
+            .infoRow {
+                display: flex;
+                align-items: center;
+                margin-top: 30px;
+                h2 {
+                    @include searchBox-h2();
+                }
+                p {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+}

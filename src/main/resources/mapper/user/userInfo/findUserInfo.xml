@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.user.userInfo.dao.FindUserInfoDao"> 
+
+
+<select id="findUserId" parameterType="hashmap" resultType="String"> 
+	SELECT 	U_ID
+	FROM 	USER_INFO 
+	WHERE 	USER_NAME = #{userName} 
+	AND		PHONE = #{phone} 
+	LIMIT 1
+</select> 
+
+
+<select id="findUserPass" parameterType="hashmap" resultType="int"> 
+	SELECT 	COUNT(1) 
+	FROM 	USER_INFO 
+	WHERE 	U_ID = #{uId} 
+	AND		USER_NAME = #{userName} 
+	AND		PHONE = #{phone} 
+</select> 
+
+<update id="userPwUpdate" parameterType="hashmap">
+	UPDATE 	USER_INFO
+	SET		USER_PW=#{userPw}
+	WHERE	U_ID=#{uId}
+</update>
+
+
+</mapper>
+

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.zenith.admin.situation.dao.AdminSituationDao">
+
+
+	<select id="situationTeacherList" parameterType="hashmap" resultType="hashmap">
+	<include refid="common.stratPage" />
+	<![CDATA[ 
+		SELECT T_ID		,CLASS_TOL		,CLASS_ON_CNT		,CLASS_OVER_CNT		,SCH_TOL
+						,SCH_ON_CNT		,SCH_OVER_CNT		,TEACHER_NAME		,TEACHER_STATE
+		FROM 
+			(
+			SELECT 		Z1.T_ID		,CLASS_CNT 		AS CLASS_TOL		,CLASS_NOW_CNT AS CLASS_ON_CNT		,(CLASS_CNT-CLASS_NOW_CNT) AS CLASS_OVER_CNT		,SCHEDULE_CNT AS SCH_TOL 
+						,SCHEDULE_NOW_CNT AS SCH_ON_CNT				,(SCHEDULE_CNT-SCHEDULE_NOW_CNT) AS SCH_OVER_CNT,
+    					FN_TEACHER_NAME(Z1.T_ID) AS TEACHER_NAME	,FN_CODE_NAME(Z1.TEACHER_STATE) AS TEACHER_STATE
+ 			FROM 
+				(
+				SELECT 		T.T_ID		,T.TEACHER_STATE
+  							,COUNT(C.C_ID) AS CLASS_CNT		,COUNT(TEMP.C_ID) AS CLASS_NOW_CNT
+				FROM 		TEACHER_INFO T LEFT JOIN CLASS_INFO C
+					ON T.T_ID = C.T_ID 
+				LEFT JOIN 
+						(
+						SELECT		C.T_ID		,C.C_ID		,CONCAT(DATE_FORMAT(MAX(S.SCHEDULE_DATE),'%Y%m%d')
+						,
+						(
+						SELECT		DATE_FORMAT(MAX(ST.START_TIME),'%H%i') 
+						FROM 		SCHEDULE_INFO ST 
+
+						WHERE  		ST.SCHEDULE_DATE = MAX(S.SCHEDULE_DATE)))  AS START_TIME
+						FROM CLASS_INFO C LEFT JOIN SCHEDULE_INFO S
+							ON C.C_ID = S.C_ID  
+						GROUP BY C.C_ID
+						) TEMP 		ON 		TEMP.C_ID = C.C_ID
+						AND TEMP.START_TIME > DATE_FORMAT(NOW(),'%Y%m%d%H%i') 
+						GROUP BY T.T_ID
+				) Z1
+				,
+				(
+				SELECT		T.T_ID		,COUNT(S.C_ID) AS SCHEDULE_CNT , 
+							SUM(IFNULL(TEMP.CNT,0)) AS SCHEDULE_NOW_CNT
+				FROM 		TEACHER_INFO T 
+				LEFT JOIN 	CLASS_INFO C
+				ON T.T_ID = C.T_ID
+				LEFT JOIN SCHEDULE_INFO S
+				ON C.C_ID = S.C_ID  
+				LEFT JOIN 
+						(
+						SELECT 		S.C_ID		,S.S_ID 	,COUNT(1) AS CNT 
+						FROM 		SCHEDULE_INFO S
+						
+						WHERE  		CONCAT( DATE_FORMAT(S.SCHEDULE_DATE,'%Y%m%d') ,DATE_FORMAT(S.START_TIME,'%H%i')) > DATE_FORMAT(NOW(),'%Y%m%d%H%i') 
+						GROUP BY S.C_ID,S.S_ID 
+						) 	TEMP ON TEMP.C_ID = S.C_ID
+						
+						AND TEMP.S_ID = S.S_ID
+						GROUP BY T.T_ID
+				) Z2
+
+				WHERE Z1.T_ID = Z2.T_ID
+				) baseT
+			]]>
+			<where>
+				<if test="sTeacherName != null and sTeacherName != ''">
+					AND FN_TEACHER_NAME(T_ID)  LIKE CONCAT('%',#{sTeacherName},'%') 
+				</if>
+			</where> 
+	
+	<include refid="common.endPage" /> 
+	</select>
+
+
+	<select id="situationTeacherInfo" parameterType="hashmap" resultType="hashmap">
+
+		SELECT   TEMP1.C_ID    ,TEMP1.CLASS_NAME  ,TEMP1.START_DATE  ,TEMP1.END_DATE
+    			,TEMP1.END_DATE  ,TEMP1.TOTLE_CNT  ,TEMP2.NOW_CNT    ,(TEMP1.TOTLE_CNT - TEMP2.NOW_CNT) AS  FINISH_CNT 
+    			,IF(TEMP1.TOTLE_CNT - TEMP2.NOW_CNT= 0, 'CLOSE', 'OPEN') AS CLASS_STATE
+		FROM 
+  			(
+    		SELECT  	C.C_ID		,C.CLASS_NAME		,C.T_ID 
+        				,MIN(SCHEDULE_DATE) AS START_DATE
+        				,MAX(SCHEDULE_DATE) AS END_DATE 
+        				,COUNT(S_ID) AS TOTLE_CNT 
+    		FROM 		SCHEDULE_INFO S 
+    			JOIN CLASS_INFO C ON S.C_ID=C.C_ID 
+    		GROUP BY C.C_ID 
+  			) TEMP1 
+		JOIN 
+  			(
+    		SELECT		C_ID		,COUNT(1) AS NOW_CNT
+    		FROM  		SCHEDULE_INFO
+
+    		WHERE   	CONCAT(DATE_FORMAT(SCHEDULE_DATE,'%Y%m%d'), DATE_FORMAT(START_TIME,'%H%i')) >= DATE_FORMAT(NOW(),'%Y%m%d%H%i')
+    		GROUP BY C_ID
+  			) TEMP2 ON TEMP1.C_ID = TEMP2.C_ID
+
+			WHERE TEMP1.T_ID = #{ tId }
+
+	</select>
+	
+	
+	<select id="situationTeacherScheduleInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT		C.C_ID		,C.T_ID		,S.S_ID		,C.CLASS_NAME		,FN_TEACHER_NAME(C.T_ID) AS TEACHER_NAME 
+					,CONCAT(S.SCHEDULE_DATE, ' ' , S.START_TIME) AS START_DATE
+					,CONCAT(S.SCHEDULE_DATE, ' ' , S.END_TIME) AS END_DATE
+					,DATE_FORMAT(S.START_TIME,'%H:%i') AS START_TIME
+					,DATE_FORMAT(S.END_TIME,'%H:%i') AS END_TIME
+
+		FROM 			CLASS_INFO 		C
+		RIGHT 	JOIN 	SCHEDULE_INFO 	S ON S.C_ID=C.C_ID
+		
+        WHERE 	T_ID = #{ tId }
+	</select>
+	
+	
+	<select id="selectTeacherName" parameterType="hashmap" resultType="hashmap">
+		SELECT		TEACHER_NAME
+		FROM 		TEACHER_INFO
+		WHERE		T_ID=#{tId}
+	</select>
+
+
+	<select id="situationTeacherCnt" parameterType="hashmap" resultType="int">
+		
+			SELECT 		COUNT(1)
+ 			FROM 
+				(
+				SELECT 		T.T_ID		,T.TEACHER_STATE
+  							,COUNT(C.C_ID) AS CLASS_CNT		,COUNT(TEMP.C_ID) AS CLASS_NOW_CNT
+				FROM 		TEACHER_INFO T LEFT JOIN CLASS_INFO C
+					ON T.T_ID = C.T_ID 
+				LEFT JOIN 
+						(
+						SELECT		C.T_ID		,C.C_ID		,CONCAT(DATE_FORMAT(MAX(S.SCHEDULE_DATE),'%Y%m%d')
+						,
+						(
+						SELECT		DATE_FORMAT(MAX(ST.START_TIME),'%H%i') 
+						FROM 		SCHEDULE_INFO ST 
+
+						WHERE  		ST.SCHEDULE_DATE = MAX(S.SCHEDULE_DATE)))  AS START_TIME
+						FROM CLASS_INFO C LEFT JOIN SCHEDULE_INFO S
+							ON C.C_ID = S.C_ID  
+						GROUP BY C.C_ID
+						) TEMP 		ON 		TEMP.C_ID = C.C_ID
+						AND TEMP.START_TIME > DATE_FORMAT(NOW(),'%Y%m%d%H%i') 
+						GROUP BY T.T_ID
+				) Z1
+				,
+				(
+				SELECT		T.T_ID		,COUNT(S.C_ID) AS SCHEDULE_CNT , 
+							SUM(IFNULL(TEMP.CNT,0)) AS SCHEDULE_NOW_CNT
+				FROM 		TEACHER_INFO T 
+				LEFT JOIN 	CLASS_INFO C
+				ON T.T_ID = C.T_ID
+				LEFT JOIN SCHEDULE_INFO S
+				ON C.C_ID = S.C_ID  
+				LEFT JOIN 
+						(
+						SELECT 		S.C_ID		,S.S_ID 	,COUNT(1) AS CNT 
+						FROM 		SCHEDULE_INFO S
+						
+						WHERE  		CONCAT( DATE_FORMAT(S.SCHEDULE_DATE,'%Y%m%d') ,DATE_FORMAT(S.START_TIME,'%H%i')) > DATE_FORMAT(NOW(),'%Y%m%d%H%i') 
+						GROUP BY S.C_ID,S.S_ID 
+						) 	TEMP ON TEMP.C_ID = S.C_ID
+						
+						AND TEMP.S_ID = S.S_ID
+						GROUP BY T.T_ID
+				) Z2
+
+				WHERE Z1.T_ID = Z2.T_ID
+	</select>
+
+</mapper>
+
+

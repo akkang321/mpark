@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+
+<mapper namespace="com.zenith.user.bbs.dao.BbsNoticeDao"> 
+
+
+<select id="bbsNoticeList" parameterType="hashmap" resultType="hashmap"> 
+<include refid="common.stratPage" /> 
+	SELECT 		B_ID			,TITLE		,substring(CONTENTS, 1, 15) AS CONTENTS		,CREATE_ID					
+				,BBS_TYPE		,UPDATE_ID 
+				,DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') AS CREATE_DATE					,DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d') AS UPDATE_DATE 
+	FROM 		BBS_INFO
+
+	WHERE 		BBS_TYPE='C160100' 
+<include refid="common.endPage" /> 
+</select> 
+
+
+<select id="bbsNoticeInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT 		B_ID			,TITLE		,CONTENTS		,CREATE_ID
+					,BBS_TYPE		,UPDATE_ID 
+					,DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') AS CREATE_DATE					,DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d') AS UPDATE_DATE
+		FROM 		BBS_INFO
+
+		WHERE 		BBS_TYPE='C160100'
+    	AND 		B_ID=#{ bId } 
+</select>
+
+
+<select id="bbsNoticeCnt" resultType="int">
+	SELECT 		COUNT(1) 
+	FROM 		BBS_INFO 
+	WHERE 		BBS_TYPE='C160100' 
+</select> 
+
+
+</mapper> 
+
+

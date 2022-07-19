@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.teacher.academy.dao.TeacherClassDao"> 
+
+
+<select id="teacherClassList" parameterType="hashmap" resultType="hashmap">
+
+	SELECT		A.CLASS_NAME		,IFNULL(A.SCHEDULE_TOL, 0) AS SCHEDULE_TOL		,IFNULL(SCHEDULE_ON_CNT, 0) AS SCHEDULE_ON_CNT		
+				,A.USER_CNT			,A.CLASS_STATE									,A.T_ID						,A.C_ID 
+	FROM 
+		(
+		SELECT		COUNT(S.S_ID) AS SCHEDULE_TOL		,T.T_ID				,C.C_ID		
+					,C.CLASS_NAME						,C.USER_CNT			,FN_CODE_NAME(C.CLASS_STATE) AS CLASS_STATE
+		FROM 		CLASS_INFO C
+			LEFT 	JOIN TEACHER_INFO 	T ON T.T_ID=C.T_ID
+			RIGHT 	JOIN SCHEDULE_INFO 	S ON S.C_ID=C.C_ID
+		GROUP BY 	C.C_ID, T.T_ID
+		ORDER BY 	T.T_ID ASC
+		) A
+
+		LEFT JOIN
+
+			(
+			SELECT		C_ID		,T_ID		,COUNT(S_ID) AS SCHEDULE_ON_CNT 
+			FROM 
+			(
+			(
+			SELECT		C.CLASS_NAME		,C.USER_CNT		,FN_CODE_NAME(C.CLASS_STATE) AS CLASS_STATE,
+						S.S_ID				,T.T_ID			,C.C_ID
+			FROM 		CLASS_INFO C
+				LEFT 	JOIN TEACHER_INFO 	T ON T.T_ID=C.T_ID
+				RIGHT 	JOIN SCHEDULE_INFO 	S ON S.C_ID=C.C_ID
+			
+			WHERE 	S.SCHEDULE_DATE = CURDATE()
+			AND 	START_TIME >= CURTIME()
+			)
+
+	UNION 
+
+			(
+			SELECT 		C.CLASS_NAME		,C.USER_CNT		,FN_CODE_NAME(C.CLASS_STATE) 
+						,S.S_ID				,T.T_ID			,C.C_ID 
+			FROM 		CLASS_INFO C 
+				LEFT 	JOIN TEACHER_INFO 	T ON T.T_ID=C.T_ID
+				RIGHT 	JOIN SCHEDULE_INFO 	S ON S.C_ID=C.C_ID
+
+			WHERE S.SCHEDULE_DATE > CURDATE()
+			)
+			) N
+			GROUP BY T_ID	,C_ID
+			ORDER BY T_ID 	ASC
+			) B 			ON 		B.T_ID=A.T_ID AND B.C_ID=A.C_ID
+
+	WHERE A.T_ID=#{ tId }
+	ORDER BY A.T_ID, A.C_ID 
+
+</select>
+
+
+<select id="classUserList" parameterType="hashmap" resultType="hashmap"> 
+	SELECT		C.C_ID		,T.T_ID		,U.U_ID		,U.USER_NAME		,FN_CODE_NAME(R.JOIN_STATE) AS JOIN_STATE 
+				,S.SCHEDULE_DATE		,S.START_TIME					,S.END_TIME 
+	FROM CLASS_INFO 	C 
+		LEFT	JOIN TEACHER_INFO 		T ON T.T_ID=C.T_ID 
+		LEFT 	JOIN SCHEDULE_INFO 		S ON S.C_ID=C.C_ID 
+		RIGHT 	JOIN RESERVATION_INFO 	R ON R.S_ID=S.S_ID 
+		LEFT 	JOIN USER_INFO 			U ON U.U_ID=R.U_ID 
+
+	WHERE T.T_ID=#{ tId } 
+</select> 
+
+
+<select id="classUserInfoSchedule" parameterType="hashmap" resultType="hashmap"> 
+	SELECT		T_ID		,C_ID		,S_ID		,CLASS_NAME			
+				,FN_TEACHER_NAME					,SCHEDULE_DATE			,START_TIME			,END_TIME 
+	FROM 
+		(
+		(
+		SELECT T.T_ID, C.C_ID, S.S_ID, C.CLASS_NAME, FN_TEACHER_NAME(T.T_ID) AS FN_TEACHER_NAME, S.SCHEDULE_DATE, S.START_TIME, S.END_TIME 
+		FROM CLASS_INFO C
+		LEFT JOIN TEACHER_INFO T ON T.T_ID=C.T_ID
+		RIGHT JOIN SCHEDULE_INFO S ON S.C_ID=C.C_ID
+
+		WHERE CURDATE()=S.SCHEDULE_DATE
+		AND SUBTIME(CURTIME(),'00:30:00') >= S.START_TIME)
+
+UNION
+
+		(
+		SELECT T.T_ID, C.C_ID, S.S_ID, C.CLASS_NAME, FN_TEACHER_NAME(T.T_ID) AS FN_TEACHER_NAME, S.SCHEDULE_DATE, S.START_TIME, S.END_TIME 
+		FROM CLASS_INFO C
+		LEFT JOIN TEACHER_INFO T ON T.T_ID=C.T_ID
+		RIGHT JOIN SCHEDULE_INFO S ON S.C_ID=C.C_ID
+		WHERE S.SCHEDULE_DATE>CURDATE())
+		) newTable
+
+WHERE 	T_ID = #{tId}
+</select>
+
+
+</mapper>
+
+

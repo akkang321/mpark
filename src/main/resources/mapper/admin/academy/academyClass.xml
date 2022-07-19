@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.admin.academy.dao.AdminAcademyClassDao">
+
+	<select id="academyClassList" resultType="hashmap"> 
+		<include refid="common.stratPage" /> 
+			SELECT 	C_ID	,CLASS_NAME		,FN_TEACHER_NAME(T_ID) AS FN_TEACHER_NAME 
+					,FN_CODE_NAME(CLASS_LEVEL) AS FN_CLASS_LEVEL
+					,FN_CODE_NAME(CLASS_TYPE) AS FN_CLASS_TYPE
+					,FN_CODE_NAME(CLASS_STATE) AS FN_CLASS_STATE
+					,(SELECT A.C_PRICE_NAME FROM CLASS_PRICE A WHERE A.C_P_ID = C.C_P_ID) AS C_PRICE_NAME
+					,USER_CNT
+					,DATE_FORMAT(CREATE_DATE, '%Y-%m-%d %T') AS CREATE_DATE
+					,DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d %T') AS UPDATE_DATE
+			FROM 	CLASS_INFO C
+			<where>
+				<if test="sClassName != null and sClassName != ''">
+					AND CLASS_NAME  LIKE CONCAT('%',#{sClassName},'%') 
+				</if>
+				<if test="sTeacherName != null and sTeacherName != ''">
+					AND FN_TEACHER_NAME(T_ID)  LIKE CONCAT('%',#{sTeacherName},'%') 
+				</if>
+			</where> 
+			ORDER BY C_ID DESC 
+		<include refid="common.endPage"/> 
+	</select>
+	
+	<select id="academyClassCnt" parameterType="hashmap" resultType="int">
+		SELECT	COUNT(1) AS CNT
+		FROM 	CLASS_INFO
+		<where>
+			<if test="sClassName != null and sClassName != ''">
+				AND CLASS_NAME  LIKE CONCAT('%',#{sClassName},'%') 
+			</if>
+			<if test="sTeacherName != null and sTeacherName != ''">
+				AND FN_TEACHER_NAME(T_ID)  LIKE CONCAT('%',#{sTeacherName},'%') 
+			</if>
+		</where>
+	</select>
+	
+	<select id="academyClassPriceList" resultType="hashmap"> 
+		SELECT	C_P_ID			,C_PRICE_NAME
+		FROM	CLASS_PRICE
+		WHERE C_PRICE_TYPE = 'C060200'	
+	</select>
+	
+	<select id="academyClassInfo" resultType="hashmap" parameterType="String">
+		SELECT	C_ID			,T_ID			,C_P_ID			,CLASS_NAME		
+				,CLASS_LEVEL	,CLASS_TYPE		,CLASS_STATE	,CLASS_ROOM	,USER_CNT
+				,FN_TEACHER_NAME(T_ID) AS FN_TEACHER_NAME 
+		FROM	CLASS_INFO
+		WHERE 	C_ID = #{cId}	
+	</select>
+	
+	
+	<insert id="academyClassInsert" parameterType="hashmap" useGeneratedKeys="true" keyProperty="cId"> 
+		INSERT	INTO	CLASS_INFO
+				(
+					T_ID			,C_P_ID				,CLASS_NAME		,CLASS_LEVEL	
+					,CLASS_TYPE		,CLASS_STATE		,CLASS_ROOM		,USER_CNT		
+					,CREATE_ID		,CREATE_DATE
+				)
+		VALUES	
+				(
+					#{tId}			,#{cPId}			,#{className}		,#{classLevel}
+					,#{classType}	,#{classState}		,#{classRoom}		,#{userCnt}			
+					,#{uId}				,NOW()	
+				)
+	</insert>
+
+	<update id="academyClassUpdate" parameterType="hashmap"> 
+			UPDATE		CLASS_INFO 
+			SET			T_ID = #{tId}						,C_P_ID = #{cPId}		
+						,CLASS_NAME = #{className}			,CLASS_LEVEL = #{classLevel} 
+						,CLASS_TYPE = #{classType}			,CLASS_STATE = #{classState} 
+						,CLASS_ROOM = #{classRoom}			,USER_CNT = #{userCnt}	
+						,UPDATE_ID = #{uId}					,UPDATE_DATE = NOW() 
+			WHERE 		C_ID=#{cId}
+	</update> 
+
+	<delete id="academyClassDelete" parameterType="String"> 
+		DELETE 	FROM	CLASS_INFO 
+		WHERE 	C_ID = #{cId} 
+	</delete> 
+
+	<select id="academyClassScheduleList" resultType="hashmap"> 
+			SELECT 	S_ID	,CONCAT(SCHEDULE_DATE, ' ' , START_TIME) AS START_DATE 
+					,CONCAT(SCHEDULE_DATE, ' ' , END_TIME) AS END_DATE 
+					,DATE_FORMAT(START_TIME,'%H:%i') AS START_TIME 
+					,DATE_FORMAT(END_TIME,'%H:%i') AS END_TIME 
+			FROM 	SCHEDULE_INFO 
+			WHERE C_ID = #{cId} 
+			ORDER BY S_ID DESC 
+	</select> 
+	
+	<insert id="academyClassScheduleInsert" parameterType="hashmap" useGeneratedKeys="true" keyProperty="sId"> 
+		INSERT	INTO	SCHEDULE_INFO 
+				(
+					C_ID			,SCHEDULE_DATE		,START_TIME		,END_TIME 
+					,CREATE_ID		,CREATE_DATE 
+				) 
+		VALUES	
+				( 
+					#{cId}			,#{scheduleDate}	,#{startTime}	,#{endTime} 
+					,#{uId}			,NOW() 
+				) 
+	</insert> 
+	
+	<delete id="academyClassScheduleDelete" parameterType="hashmap"> 
+		DELETE 	FROM	SCHEDULE_INFO 
+		<where>
+			<if test="sId != null and sId != ''"> 
+				AND  S_ID = #{sId} 
+			</if>
+			<if test="cId != null and cId != ''"> 
+				AND  C_ID = #{cId} 
+			</if>
+		</where>
+	</delete>
+</mapper>
+

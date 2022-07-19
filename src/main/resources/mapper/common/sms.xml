@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.common.dao.SmsDao">
+	
+	<select id="smsContent" parameterType="hashmap" resultType="hashmap">
+		SELECT	C_CONTENT
+		FROM 	SMS_CONTENT
+		WHERE 	C_ID = #{cId}
+	</select>
+	
+	<insert id="smsSendInsert" parameterType="hashmap">
+		INSERT	INTO SMS_SEND 
+	    		(
+					C_ID		,U_ID			,USER_NAME		,PHONE
+					,MID		,SMS_TYPE		,RESULT_CODE	,RESULT_MESSAGE	,CREATE_DATE	
+	    		)
+	    VALUES
+	        	(
+	        		#{cId}		,#{uId}			,#{userName}	,#{phone}
+	        		,#{msg_id}	,#{msg_type}	,#{result_code}	,#{message}		,NOW()
+				)
+	</insert>
+	
+</mapper>
+

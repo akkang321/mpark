@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.zenith.admin.academy.dao.AdminAcademyPriceDao"> 
+
+	<select id="tPriceList" resultType="hashmap"> 
+		SELECT		C_PRICE_NAME		,PRICE			,TEACHER_PRICE		
+					,C_PRICE_CNT		,DISCOUNT		,C_PRICE_TYPE		,C_P_ID 
+					,EXPIRATION_DATE_CNT 
+		FROM 		CLASS_PRICE
+		WHERE 		C_PRICE_TYPE = 'C060100'
+	</select>
+
+	<select id="cPriceList" resultType="hashmap"> 
+		SELECT		C_PRICE_NAME		,PRICE			,TEACHER_PRICE		
+					,C_PRICE_CNT		,DISCOUNT		,C_PRICE_TYPE		,C_P_ID 
+					,EXPIRATION_DATE_CNT
+		FROM 		CLASS_PRICE
+		WHERE 		C_PRICE_TYPE = 'C060200' 
+	</select>
+
+	<insert id="tPriceInsert" parameterType="hashmap">
+		INSERT 	INTO	CLASS_PRICE(
+									C_PRICE_NAME		,PRICE				,TEACHER_PRICE			,C_PRICE_CNT 
+									,DISCOUNT			,C_PRICE_TYPE		,EXPIRATION_DATE_CNT 
+									,CREATE_ID			,CREATE_DATE 
+									) 
+
+		VALUES(#{priceName}		,#{price}		,#{teacherPrice}		,#{t_cnt}		
+				,#{discount}		,'C060100'		,#{expirationDateCnt} 
+				,#{uId}			,NOW() 
+				)
+	</insert>
+
+	<insert id="cPriceInsert" parameterType="hashmap">
+		INSERT INTO CLASS_PRICE(C_PRICE_NAME		,PRICE		,TEACHER_PRICE		,C_PRICE_TYPE	,EXPIRATION_DATE_CNT
+								,CREATE_ID			,CREATE_DATE
+								)
+		
+		VALUES(#{priceName2}		,#{price2}		,#{teacherPrice2}		,'C060200'	,#{expirationDateCnt2}
+				,#{uId}				,NOW()) 
+	</insert>
+
+	<update id="tPriceUpdate" parameterType="hashmap">
+		UPDATE 		CLASS_PRICE
+		SET 		C_PRICE_NAME=#{cPriceName}		,PRICE=#{price}		,TEACHER_PRICE=#{teacherPrice}
+					,C_PRICE_CNT=#{cPriceCnt}		,DISCOUNT=#{discount}
+					,EXPIRATION_DATE_CNT = #{expirationDateCnt}
+					,UPDATE_ID=#{uId}
+					,UPDATE_DATE=NOW()
+
+		WHERE		C_P_ID = #{c_pId}
+	</update>
+
+	<update id="cPriceUpdate" parameterType="hashmap">
+		UPDATE		CLASS_PRICE 
+		SET			C_PRICE_NAME = #{priceName2}		,PRICE = #{price2}			,TEACHER_PRICE = #{teacherPrice2}
+					,UPDATE_ID=#{uId} 					,EXPIRATION_DATE_CNT = #{expirationDateCnt2}
+					,UPDATE_DATE=NOW() 
+
+		WHERE 		C_P_ID = #{c_pId}
+	</update>
+
+	<delete id="priceDelete" parameterType="hashmap"> 
+		DELETE 		FROM 	CLASS_PRICE
+		WHERE 		C_P_ID = #{c_pId}
+	</delete>
+
+</mapper>
+
+

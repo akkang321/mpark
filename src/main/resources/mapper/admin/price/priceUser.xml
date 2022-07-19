@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.zenith.admin.price.dao.AdminPriceUserDao"> 
+
+	<select id="priceUserList" parameterType="hashmap" resultType="hashmap"> 
+	<include refid="common.stratPage" /> 
+		SELECT 	U.U_ID		,U.USER_NAME		,SUM(PI.ORG_PAY_PRICE) AS ORG_PRICE_TOL		
+				,SUM(PI.PAY_PRICE) AS PAY_PRICE_TOL		,IFNULL(SUM(RE.REFUND_PRICE), 0) AS REFUND_TOL
+		
+		FROM 	USER_INFO U
+			INNER JOIN PAY_INFO PI ON PI.U_ID=U.U_ID 
+			LEFT JOIN REFUND_INFO RE ON RE.U_ID=U.U_ID
+		<where>
+			<if test="sUId != null and sUId != ''"> 
+				AND U.U_ID LIKE CONCAT('%',#{sUId},'%') 
+			</if>
+			<if test="sUserName != null and sUserName != ''"> 
+				AND U.USER_NAME LIKE CONCAT('%',#{sUserName},'%') 
+			</if>
+		</where>
+		GROUP BY U.U_ID 
+	<include refid="common.endPage" /> 
+	</select>
+
+
+	<select id="priceUserCnt" parameterType="hashmap" resultType="int"> 
+		SELECT 	COUNT(U.U_ID) 
+		
+		FROM 	USER_INFO U 
+			INNER JOIN PAY_INFO PI ON PI.U_ID=U.U_ID 
+			LEFT JOIN REFUND_INFO RE ON RE.U_ID=U.U_ID 
+		<where>
+			<if test="sUId != null and sUId != ''"> 
+				AND U.U_ID LIKE CONCAT('%',#{sUId},'%') 
+			</if> 
+			<if test="sUserName != null and sUserName != ''"> 
+				AND U.USER_NAME LIKE CONCAT('%',#{sUserName},'%') 
+			</if>
+		</where>
+		GROUP BY U.U_ID 
+	</select>
+
+
+</mapper>
+
+

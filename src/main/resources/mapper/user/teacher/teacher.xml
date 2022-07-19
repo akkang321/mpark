@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.user.teacher.dao.TeacherDao">
+
+	<select id="instructor" parameterType="hashmap" resultType="hashmap">
+		SELECT 		S_ID			,C_ID			,T_ID				,CLASS_NAME			,DATE_FORMAT(SCHEDULE_DATE, '%M') AS DATE_M		,DATE_FORMAT(SCHEDULE_DATE, '%d') AS DATE_D			
+        			,START_TIME		,END_TIME		,TEACHER_NAME		,CODE_NAME			,T_ID 
+		FROM 
+        	(
+        		(
+        		SELECT		T.T_ID 									AS T_ID, 
+							S.SCHEDULE_DATE 						AS SCHEDULE_DATE, 
+							TIME_FORMAT(S.START_TIME, '%H:%i') 		AS START_TIME, 
+							TIME_FORMAT(S.END_TIME, '%H:%i') 		AS END_TIME, 
+							T.TEACHER_NAME 							AS TEACHER_NAME, 
+							FN_CODE_NAME(C.CLASS_LEVEL) 			AS CODE_NAME,
+                            S.S_ID,
+                            C.C_ID,
+                            C.CLASS_NAME
+						
+				FROM 		SCHEDULE_INFO 	S 
+					JOIN 	CLASS_INFO 		C 		ON S.C_ID=C.C_ID 
+					JOIN 	TEACHER_INFO 	T 		ON T.T_ID=C.T_ID
+
+				WHERE 	T.T_ID=#{tId}
+        		AND 	S.SCHEDULE_DATE = CURDATE()
+				AND 	ADDTIME(S.START_TIME, '00:30:00') >= CURTIME()
+
+				ORDER 	BY S.SCHEDULE_DATE ASC
+				)
+
+				UNION
+
+        		(
+        		SELECT		T.T_ID 									AS T_ID, 
+							S.SCHEDULE_DATE 						AS SCHEDULE_DATE, 
+							TIME_FORMAT(S.START_TIME, '%H:%i') 		AS START_TIME, 
+							TIME_FORMAT(S.END_TIME, '%H:%i') 		AS END_TIME, 
+							T.TEACHER_NAME 							AS TEACHER_NAME, 
+							FN_CODE_NAME(C.CLASS_LEVEL) 			AS CODE_NAME,
+                            S.S_ID,
+                            C.C_ID,
+                            C.CLASS_NAME
+
+				FROM 		SCHEDULE_INFO 	S 
+					JOIN 	CLASS_INFO 		C 		ON S.C_ID=C.C_ID 
+					JOIN 	TEACHER_INFO 	T		ON T.T_ID=C.T_ID
+		
+				WHERE 	T.T_ID=#{tId}
+        		AND 	S.SCHEDULE_DATE > CURDATE()
+        	
+				ORDER 	BY S.SCHEDULE_DATE ASC
+				)
+			) 	newTable
+
+        ORDER BY 	SCHEDULE_DATE ASC
+        LIMIT 3;
+	</select>
+
+	<select id="teacherInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT	T_ID			,FN_FILE_PATH(PHOTO_ID) AS PHOTO_PATH
+				,TEACHER_NAME	,VIDEO_URL		,TEACHER_NAME_EN			,SELF_INTRODUCTION			,TEACHER_INTRODUCTION
+		FROM	TEACHER_INFO
+		WHERE	T_ID=#{tId}
+	</select>
+
+	<select id="userSubImgs" parameterType="hashmap" resultType="hashmap">
+		SELECT 		CONCAT(FILE_PATH,'\\',FILE_NAME) 	AS PHOTOS_PATHS 
+		FROM 		FILE_INFO 
+		WHERE 		FILE_USE_ID=#{ tId }
+		ORDER 		BY FILE_ID DESC
+		LIMIT 		3
+	</select>
+
+</mapper>
+
+

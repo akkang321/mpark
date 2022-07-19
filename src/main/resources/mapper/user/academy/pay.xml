@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.user.academy.dao.PayDao">
+	<select id="ticketList" resultType="hashmap">
+		SELECT	C_P_ID	,C_PRICE_NAME	,(PRICE-DISCOUNT) AS PRICE	,DISCOUNT		,C_PRICE_CNT
+		FROM 	CLASS_PRICE
+		<choose>
+			<when test ="classType == 'C060200'">
+				WHERE 	C_PRICE_TYPE = 'C060200'
+			</when>
+			<otherwise>
+				WHERE 	C_PRICE_TYPE = 'C060100'
+			</otherwise>
+		</choose>
+		<if test="sClassLevel != null and sClassLevel != ''">
+			AND	C.CLASS_LEVEL = #{sClassLevel}
+		</if>
+		ORDER BY C_P_ID
+	</select>
+	
+	<select id="ticketInfo" resultType="hashmap" parameterType="hashmap">
+		SELECT	C_P_ID	,PRICE	,DISCOUNT		,C_PRICE_CNT	,C_PRICE_NAME
+		FROM 	CLASS_PRICE
+		WHERE	C_P_ID = (SELECT C_P_ID FROM CLASS_INFO C INNER JOIN SCHEDULE_INFO S ON C.C_ID = S.C_ID WHERE S.S_ID = #{sId})
+	</select>
+	
+	<select id="userCoupon" parameterType="hashmap" resultType="hashmap">
+		SELECT 		CI.COUPON_ID	,CI.COUPON_TYPE		,CI.COUPON_DISCOUNT
+		FROM 		USER_COUPON UC
+		INNER 	JOIN 	COUPON_INFO CI 
+		ON 		CI.COUPON_ID=UC.COUPON_ID
+    	WHERE 	UC.USER_ID=#{uId}
+    	AND 	UC.USE_YN='C150100' 
+    	AND		DATE_FORMAT(CI.EXPIRY_DATE, '%Y%m%d') >= DATE_FORMAT(NOW(), '%Y%m%d')
+    	AND		CR_ID = #{crId}
+	</select>
+	
+	<insert id="ticketInsert" parameterType="hashmap" useGeneratedKeys="true" keyProperty="tId">
+		INSERT	INTO	TICKET_INFO
+				(
+					U_ID				,C_P_ID				,TICKET_CNT	
+					,EXPIRATION_DATE
+					,NOW_TICKET_CNT		,USE_TICKET_CNT		,CREATE_DATE		
+				)
+		VALUES	
+				(
+					#{uId}				,#{cPId}			,#{ticketCnt}			
+					,(SELECT DATE_ADD(NOW(), INTERVAL (SELECT EXPIRATION_DATE_CNT FROM CLASS_PRICE WHERE C_P_ID = #{cPId}) DAY))
+					,#{ticketCnt}		,0					,NOW()
+				)
+	</insert>
+	
+	<insert id="payInsert" parameterType="hashmap" >
+		INSERT	INTO	PAY_INFO
+				(
+					P_ID			
+					,U_ID			,T_ID				,C_P_ID		
+					,PAY_PRICE		,TICKET_CNT			,PAY_STATE		,CREATE_DATE
+					,ORG_PAY_PRICE	
+					,TICKET_DISCOUNT	
+					<if test="couponId != null and couponId != ''">
+						,COUPON_ID		,COUPON_TYPE ,COUPON_DISCOUNT_PRICE		,COUPON_DISCOUNT_RATE
+					</if>
+						
+				)
+		VALUES	
+				(
+					#{pId}
+					,#{uId}			,#{tId}			,#{cPId}
+					,#{payPrice}	,#{ticketCnt}	,'C140100'		,NOW()
+					,(SELECT PRICE FROM CLASS_PRICE WHERE C_P_ID = #{cPId})	
+					,(SELECT DISCOUNT FROM CLASS_PRICE WHERE C_P_ID = #{cPId})
+					<if test="couponId != null and couponId != ''">
+					,#{couponId}	,#{couponType} ,#{couponDiscountPrice}	,#{couponDiscountRate}
+					</if>
+				)
+				
+		<selectKey resultType="String" keyProperty="pId" order="BEFORE">
+			SELECT CONCAT('T', DATE_FORMAT(NOW(), '%Y%m%d'),LPAD(FN_NEXTVAL('PAY_SEQ','D'),'6','0'))
+		</selectKey>
+	</insert>
+	
+	<update id="updateUserCoupon" parameterType="hashmap">
+		UPDATE	USER_COUPON
+		SET 	USE_YN = 'C150200', 	USE_DATE = NOW()
+		WHERE 	CR_ID = #{crId}
+	</update>
+</mapper>
+

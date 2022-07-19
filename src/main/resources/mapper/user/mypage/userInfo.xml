@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenith.user.mypage.dao.UserInfoDao">
+
+	<select id="userInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT 		U_ID		,USER_NAME		,EMAIL		,PHONE  
+		FROM 		USER_INFO
+		WHERE 		U_ID=#{uId}
+	</select>
+	
+	<select id="checkUserPw" parameterType="string" resultType="int">
+		SELECT		COUNT(1)
+		FROM		USER_INFO
+		WHERE		USER_PW=#{checkPw}
+	</select>
+	
+	<update id="userInfoUpdate" parameterType="hashmap">
+		UPDATE 		USER_INFO
+		SET			USER_NAME=#{userName}		,EMAIL=#{email}		,PHONE=#{phone}
+		    	<if test="userPw != null and userPw != ''">
+    				,USER_PW=#{userPw}
+    			</if>
+		WHERE		U_ID=#{uId}
+	</update>
+
+</mapper>
+
