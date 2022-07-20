@@ -1,28 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	if("${param.msg}") {
-		alert("아이디 비밀번호 확인하세요.");
+function onSignIn(googleUser) {
+	  var profile = googleUser.getBasicProfile();
+	  console.log(googleUser);
+	  console.log(googleUser.getAuthResponse().id_token);
+
 	}
-});
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
 </script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="582641289119-vge5hepgljfbeabh48r6km55iln3s2c9.apps.googleusercontent.com">
 <body>
     <div id="wrap">
-    	<form id="frm" method="post" action="/admin/loginProcess"> 
-			<div class="login">
-				<h1>ZENITH 관리자</h1>
-	            <div class="id">
-	                <h2 id="test">아이디</h2>
-	                <input type="text" id="uId" name="uId" value="admin" placeholder="아이디"> 
-	            </div><!--e:id-->
-	            <div class="pw">
-	                <h2>비밀번호</h2>
-	                <input type="password" id="userPw" name="userPw" value="123123" placeholder="비밀번호"> 
-	            </div><!--e:pw-->
-	            <button type="submit">로그인</button>
-	        </div><!--e:login-->
-        </form>
+   	 <div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<a href="#" onclick="signOut();">Sign out</a>
     </div><!--e:wrap-->
 </body>
 

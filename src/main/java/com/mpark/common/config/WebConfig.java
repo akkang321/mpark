@@ -75,15 +75,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
 	public ArrayList<String> addPathUrlList(){
 		ArrayList<String> urlList = new ArrayList<String>();
-		urlList.add("/admin/*");
-		urlList.add("/admin");
-		urlList.add("/teacher/*");
-		urlList.add("/teacher");
-		/* urlList.add("/**"); */
-		urlList.add("/user/*");
-		urlList.add("/user");
-		urlList.add("/pay/*");
-		urlList.add("/pay");
 		return urlList;
 	}
 

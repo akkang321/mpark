@@ -16,27 +16,8 @@ public class LoggerInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession(true);
-		Map<String, String> userInfo = (Map<String, String>) session.getAttribute("userInfo");
-		String url = request.getRequestURI();
-
-		if (url.indexOf("admin") > -1) {			// 'admin' 문자열 없는 경우
-			if (ObjectUtils.isEmpty(userInfo)) {
-				response.sendRedirect("/admin/login");
-				return false;
-			} else {
-				session.setMaxInactiveInterval(60 * 60);
-				return true;
-			}
-		} else {
-			if (ObjectUtils.isEmpty(userInfo)) {
-				response.sendRedirect("/login");
-				return false;
-			} else {
-				session.setMaxInactiveInterval(60 * 60);
-				return true;
-			}
-		}
+		
+		return true;
 	}
 
 	@Override
