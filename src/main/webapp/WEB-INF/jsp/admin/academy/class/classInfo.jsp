@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						const day = new Date(arg.start);
 						let sTime = new Date(day.getFullYear(),day.getMonth(),day.getDate(),startTimes[0],startTimes[1])
 						let eTime = new Date(day.getFullYear(),day.getMonth(),day.getDate(),endTimes[0],endTimes[1])
-						
+
 						const data = {	"cId":"${classInfo.C_ID}"
 										,"scheduleDate":getDateStr(day)
 										,"startTime":startTime
