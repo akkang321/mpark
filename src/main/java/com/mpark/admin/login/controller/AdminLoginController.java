@@ -2,6 +2,7 @@ package com.mpark.admin.login.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mpark.admin.login.service.AdminLoginService;
+import com.mpark.common.util.RestTemplateUtil;
 import com.mpark.common.util.SecurityUtil;
 import com.mpark.common.util.StringUtil;
 
@@ -25,17 +28,16 @@ public class AdminLoginController {
 	AdminLoginService adminLoginService;
 
 	@RequestMapping("/admin/login") 
-	public String login() {
+	public String login(HttpServletRequest request) {
+		
 		return "/admin/login/login";
 	}
 
 	@RequestMapping("/admin/loginProcess")
-	public ModelAndView loginProcess(@RequestParam Map<String, Object> param, HttpSession session, ModelAndView mv) throws Exception { 
-
-		param.put("userPw", SecurityUtil.sha256(StringUtil.nvl(param.get("userPw")))); 
-		Map<String, Object> userInfo = adminLoginService.selectAdminInfo(param);
-
-		return mv;
+	@ResponseBody
+	public void loginProcess(@RequestParam Map<String, Object> param, HttpServletRequest request) throws Exception { 
+		HttpSession session = request.getSession();
+		session.setAttribute("token", param.get("AccessToken"));
 	}
 
 	@RequestMapping("/admin/logout") 
@@ -43,6 +45,15 @@ public class AdminLoginController {
 		session.invalidate();
 		mv = new ModelAndView("redirect:/admin/login"); 
 		return mv;
+	}
+	
+	@RequestMapping("/admin/test") 
+	public String test(HttpServletRequest request, HttpSession session,ModelAndView mv) {
+		
+		String token = StringUtil.nvl(session.getAttribute("token"));
+		mv.addObject("token",token);
+		
+		return "/admin/login/test";
 	}
 
 }

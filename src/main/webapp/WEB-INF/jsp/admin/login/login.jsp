@@ -6,7 +6,19 @@ function onSignIn(googleUser) {
 	  console.log(googleUser);
 	  console.log(googleUser.getAuthResponse().id_token);
 
-	}
+
+	  $.ajax({
+			type: "post",
+			url: "/admin/loginProcess",
+			datatype:"json",
+			data: {"AccessToken":googleUser.getAuthResponse().id_token},
+			success:function( data ) {
+				   window.location.reload();
+			}
+		});
+	  
+
+}
 
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
@@ -14,6 +26,9 @@ function signOut() {
       console.log('User signed out.'); 
     });
   }
+
+
+
 </script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="582641289119-vge5hepgljfbeabh48r6km55iln3s2c9.apps.googleusercontent.com">
