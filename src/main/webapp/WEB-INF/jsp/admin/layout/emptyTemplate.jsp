@@ -9,13 +9,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title><tiles:getAsString name="title" /></title>
-
-<link rel="stylesheet" href="/css/admin/all.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 <script src="/js/admin/jquery.js"></script>
-<script src="/js/common.js"></script>
+<link rel="stylesheet" href="/css/admin/web.css">
+<link rel="stylesheet" href="/css/admin/reset.css">
 </head>
-
-<tiles:insertAttribute name="body" />
-
+	<tiles:insertAttribute name="body" />
 </html>

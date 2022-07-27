@@ -8,9 +8,9 @@
 	</definition>
 
 	<definition name="adminLayout" template="/WEB-INF/jsp/admin/layout/basicTemplate.jsp">
-		<put-attribute name="header" value="/WEB-INF/jsp/admin/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/admin/layout/left.jsp" />
 	</definition>
-
+	
 	<definition name="/admin/*" extends="adminLayout">
 		<put-attribute name="title" expression="mpark 관리자"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/admin/{1}.jsp" />
@@ -20,38 +20,10 @@
 		<put-attribute name="title" expression="mpark 관리자"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/admin/{1}/{2}.jsp" />
 	</definition>
-
-	<definition name="/admin/*/*/*" extends="adminLayout">
-		<put-attribute name="title" expression="mpark 관리자"/>
-		<put-attribute name="body" value="/WEB-INF/jsp/admin/{1}/{2}/{3}.jsp" />
-	</definition>
-
+	
 	<definition name="/admin/login/login" extends="emptyLayout">
-		<put-attribute name="title" expression="mpark 관리자 로그인"/>
+		<put-attribute name="title" expression="mpark 관리자"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/admin/login/login.jsp" />
-	</definition>
-	
-	<definition name="teacherLayout" template="/WEB-INF/jsp/admin/layout/basicTemplate.jsp">
-		<put-attribute name="header" value="/WEB-INF/jsp/teacher/layout/header.jsp" />
-	</definition>
-	
-	<definition name="/teacher/*" extends="teacherLayout">
-		<put-attribute name="title" expression="mpark teacher"/>
-		<put-attribute name="body" value="/WEB-INF/jsp/teacher/{1}.jsp" />
-	</definition>
-
-	<definition name="/teacher/*/*" extends="teacherLayout">
-		<put-attribute name="title" expression="mpark teacher"/>
-		<put-attribute name="body" value="/WEB-INF/jsp/teacher/{1}/{2}.jsp" />
-	</definition>
-	<definition name="/teacher/*/*/*" extends="teacherLayout">
-		<put-attribute name="title" expression="mpark teacher"/>
-		<put-attribute name="body" value="/WEB-INF/jsp/teacher/{1}/{2}/{3}.jsp" />
-	</definition>
-
-	<definition name="/teacher/login/login" extends="emptyLayout">
-		<put-attribute name="title" expression="mpark teacher 로그인"/>
-		<put-attribute name="body" value="/WEB-INF/jsp/teacher/login/login.jsp" />
 	</definition>
 	
 
