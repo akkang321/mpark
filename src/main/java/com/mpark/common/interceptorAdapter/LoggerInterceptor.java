@@ -1,15 +1,14 @@
 package com.mpark.common.interceptorAdapter;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mpark.common.util.StringUtil;
 
 @Component
 public class LoggerInterceptor implements HandlerInterceptor {
@@ -17,7 +16,15 @@ public class LoggerInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
-		return true;
+		HttpSession session = request.getSession(true);
+		String token = StringUtil.nvl(session.getAttribute("token"));
+		if (token.equals("")) {
+			response.sendRedirect("/admin/login");
+			return false;
+		} else {
+			session.setMaxInactiveInterval(60 * 60);
+			return true;
+		}
 	}
 
 	@Override

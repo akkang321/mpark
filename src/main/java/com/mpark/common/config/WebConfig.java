@@ -86,24 +86,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
 		urlList.add("/js/**");
 		urlList.add("/file/**");
 		urlList.add("/myImg/**");
-		urlList.add("/fullcalendar/**");
 		urlList.add("/modal/**");
 
 		urlList.add("/admin/login");
 		urlList.add("/admin/loginProcess");
-		urlList.add("/user/*");
-		urlList.add("/");
-		urlList.add("/index");
-		urlList.add("/login");
-//		urlList.add("/logout");
-		urlList.add("/loginProcess");
-		urlList.add("/userJoin");
-		urlList.add("/userJoinProcess");
-		urlList.add("/checkUid");
-		urlList.add("/contact");
-
-		urlList.add("/aboutUs");
-		urlList.add("/scheduleList");
+		
 		
 
 		return urlList;

@@ -8,17 +8,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AdminMainController {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@RequestMapping("")
-	public String index() {
-
-		/*
-		 * AdminVO adminVO = (AdminVO) AdminDetailsHelper.getAuthenticatedUser();
-		 * logger.info(adminVO.getUserId()); logger.info(adminVO.getEmail());
-		 * logger.info(adminVO.getPhone());
-		 */
-
-		return "/admin/index";
-	}
 }

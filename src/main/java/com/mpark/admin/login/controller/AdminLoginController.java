@@ -34,10 +34,11 @@ public class AdminLoginController {
 	}
 
 	@RequestMapping("/admin/loginProcess")
-	@ResponseBody
-	public void loginProcess(@RequestParam Map<String, Object> param, HttpServletRequest request) throws Exception { 
+	public ModelAndView loginProcess(@RequestParam Map<String, Object> param, HttpServletRequest request,ModelAndView mv) throws Exception { 
 		HttpSession session = request.getSession();
-		session.setAttribute("token", param.get("AccessToken"));
+		session.setAttribute("token", param.get("token"));
+		mv.setViewName("redirect:/admin/index");
+		return mv;
 	}
 
 	@RequestMapping("/admin/logout") 
