@@ -9,20 +9,22 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 public class RestTemplateUtil {
+
+
+private static String apiUrl = "https://wi2nmk7hlc.execute-api.ap-northeast-2.amazonaws.com/";  
 	
-public static Map<String, Object> sendPostRequest(String url, String token) {
+public static ResponseEntity<String> sendPostRequest(String url, String token) {
 		
-		RestTemplate restTemplete = new RestTemplate();
-		
+		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type", "application/json");
 		headers.set("Authorization", "Bearer "+token);
 		
-		HttpEntity<?> requestMessage = new HttpEntity<>( headers);
-		ResponseEntity<Map> response = restTemplete.postForEntity(url, requestMessage, Map.class);
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
+		ResponseEntity<String> responseEntity = restTemplate.postForEntity(apiUrl+url, request, String.class);
 		
-		return (Map<String, Object>) response;
+		return responseEntity;
 	}
 	
 	
