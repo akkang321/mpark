@@ -1,4 +1,4 @@
-package com.mpark.admin.main.controller;
+package com.mpark.admin.main;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
