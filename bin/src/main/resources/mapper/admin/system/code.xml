@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.zenith.admin.system.dao.CodeInfoDao">
+	
+    <select id="codeList" parameterType="hashmap" resultType="hashmap">
+    	<include refid="common.stratPage"/>
+			SELECT 	CODE_ID	,CODE_NAME	,PARENT_CODE	,CODE_DESC	,CODE_LEVEL
+					,ETC1	,ETC2		,ETC3			,CREATE_ID
+					,CREATE_DATE		,UPDATE_ID		,UPDATE_DATE 
+			FROM 	CODE_INFO
+			<where>
+				<if test="sCodeId != null and sCodeId != ''">
+					AND CODE_ID  LIKE CONCAT('%',#{sCodeId},'%') 
+				</if>
+				<if test="sCodeName != null and sCodeName != ''">
+					AND CODE_NAME  LIKE CONCAT('%',#{sCodeName},'%') 
+				</if>
+				<if test="sParentCode != null and sParentCode != ''">
+					AND PARENT_CODE  LIKE CONCAT('%',#{sParentCode},'%')
+				</if>
+			</where>
+			ORDER BY PARENT_CODE, CODE_DESC
+        <include refid="common.endPage"/>
+    </select>
+
+	<select id="codeCnt" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(1) AS CNT
+		FROM 	CODE_INFO
+		<where>
+			<if test="sCodeId != null and sCodeId != ''">
+				AND CODE_ID LIKE CONCAT('%',#{sCodeId},'%')
+			</if>
+			<if test="sCodeName != null and sCodeName != ''">
+				AND CODE_NAME LIKE CONCAT('%',#{sCodeName},'%')
+			</if>
+			<if test="sParentCode != null and sParentCode != ''">
+				AND PARENT_CODE LIKE CONCAT('%',#{sParentCode},'%')
+			</if>
+		</where>
+	</select>
+    
+    <insert id="codeInsert" parameterType="hashmap" >
+		INSERT INTO CODE_INFO
+				(
+					CODE_ID		,CODE_NAME		,PARENT_CODE	,CODE_DESC	,CODE_LEVEL
+					,ETC1		,ETC2			,ETC3			,CREATE_ID
+					,CREATE_DATE
+				)
+		VALUES
+				(
+					#{codeId}	,#{codeName}	,#{parentCode}	,#{codeDesc},#{codeLevel}
+					,#{etc1}	,#{etc2}		,#{etc3}		,#{uId}
+					,NOW()
+				)
+	</insert>
+	
+	<select id="codeSelect" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT	CODE_ID	,CODE_NAME	,PARENT_CODE	,CODE_DESC	,CODE_LEVEL
+					,ETC1	,ETC2		,ETC3			,CREATE_ID
+					,CREATE_DATE		,UPDATE_ID		,UPDATE_DATE 
+            FROM	CODE_INFO
+            WHERE	CODE_ID = #{codeId}
+        ]]>
+    </select>
+   
+	<update id="codeUpdate" parameterType="hashmap">
+		<![CDATA[
+			UPDATE	CODE_INFO 
+			SET		CODE_NAME = #{codeName}		,PARENT_CODE = #{parentCode}
+					,CODE_LEVEL	= #{codeLevel}
+					,CODE_DESC = #{codeDesc}	,ETC1 =  #{etc1}
+					,ETC2 = #{etc2}				,ETC3 =  #{etc3}
+					,UPDATE_ID = #{uId}			,UPDATE_DATE = NOW()
+			WHERE	CODE_ID = #{codeId}	
+		]]>
+	</update>
+     
+	<delete id="codeDelete" parameterType="String">
+			DELETE	FROM CODE_INFO 
+			WHERE	CODE_ID = #{codeId}
+	</delete>
+    
+</mapper>
