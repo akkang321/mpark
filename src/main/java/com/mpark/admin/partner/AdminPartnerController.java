@@ -56,11 +56,10 @@ public class AdminPartnerController {
 	@RequestMapping(value = { "/admin/partnerList" })
 	public ModelAndView getPartners(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException { 
 
-		
 		MultiValueMap<String,String> param = new LinkedMultiValueMap<>();
 		param.add("Mode", "DEFAULT"); 
 		param.add("Keyword", "");
-		
+
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("getPartners", token, param); 
 		int resultCode = responseEntity.getStatusCodeValue();
 		mv.addObject("resultCode", resultCode);
@@ -75,7 +74,6 @@ public class AdminPartnerController {
 		mv.setViewName("/admin/partner/partnerList"); 
 		return mv; 
 	}
-
 }
 
 
