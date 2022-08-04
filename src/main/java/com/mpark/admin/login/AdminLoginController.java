@@ -32,19 +32,11 @@ public class AdminLoginController {
 	@RequestMapping("/admin/logout") 
 	public ModelAndView logout(HttpSession session, ModelAndView mv) throws Exception { 
 		session.invalidate();
+		mv.addObject("isLogin", "Y");
+		
 		mv = new ModelAndView("redirect:/admin/login"); 
 		return mv;
 	}
-	
-	@RequestMapping("/admin/test") 
-	public String test(HttpServletRequest request, HttpSession session,ModelAndView mv) {
-		
-		String token = StringUtil.nvl(session.getAttribute("token"));
-		mv.addObject("token",token);
-		
-		return "/admin/login/test";
-	}
-
 }
 
 
