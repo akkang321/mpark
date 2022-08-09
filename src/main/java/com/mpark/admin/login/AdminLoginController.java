@@ -38,5 +38,3 @@ public class AdminLoginController {
 		return mv;
 	}
 }
-
-

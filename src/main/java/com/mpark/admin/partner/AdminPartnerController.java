@@ -39,6 +39,7 @@ public class AdminPartnerController {
 			String result = responseEntity.getBody();
 			List<?> list = mapper.readValue(result, List.class);
 			mv.addObject("list", list);
+			mv.setViewName("/admin/partner/partnerSingeList");
 		} else {
 			mv.setViewName("redirect:/admin/logout");
 		}
