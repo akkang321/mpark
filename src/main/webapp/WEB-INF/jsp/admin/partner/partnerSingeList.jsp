@@ -1,58 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="PartnersWrap">
-	<div class="searchBox">
-		<input type="text" id="PartnersName" placeholder="파트너스명 검색">
-		<button onclick="GetPartners($('#PartnersName').val());">검색</button>
-	</div>
-	<c:forEach var="list" items="${list}">
-		<div class="Contents">
-		    <div class="Df Df_Ac Contents_head">
-		        <p>새로운 파트너스 신청 : ${list.PartnerName}</p>
-		        <p>주차장 명 : ???</p>
-		        <p>보험 종류 : ???</p>
-		    </div>
-		    <div class="Df Df_Ac Contents_body">
-		        <div class="Df Wc3">
-		            <p>대표자명 :</p>
-		            <p>${list.PartnerName}</p>    
-		        </div>
-		        <div class="Df Wc3">
-		            <p>E-Mail :</p>
-		            <p>${list.OwnerEmail}</p>
-		        </div>
-		        <div class="Df Wc3">
-		            <p>주소 :</p>
-		            <p>???</p>
-		        </div>
-		        
-		    </div>
-		    <div class="Df Df_Ac Contents_body">
-		        <div class="Df Wc3">
-		            <p>전화번호 :</p>
-		            <p>${list.PhoneNumber}</p>
-		        </div>
-		        <div class="Df Wc3">
-		            <p>사업자 번호 :</p>
-		            <p>?????</p>
-		        </div>
-		        <div class="Df Wc3">
-		            <p> 계좌번호 :</p>
-		            <p>${list.BankName} ${list.BankAccount}</p>
-		        </div>
-		
-		    </div>
-		    <section class="Df mr_130 Jc_Fd mt-30">
-		        <article class="accept_Box cursor">
-		            <p>수락</p>
-		        </article>
-		        <article class="cancellation_Box cursor">
-		            <p>취소</p>
-		        </article>
-		    </section>
+ <div class="main-content">
+	<div class="page-content">
+		<div class="container-fluid">
+			<div class="row">
+				<form class="app-search d-none d-lg-block " style="margin-left: 13px;">
+					<div class="position-relative" style="width: 170px;">
+						<input type="text" class="form-control" placeholder="Search..." style="color: black; background-color: white;">
+						<span class="ri-search-line" style="color: black;"></span>
+					</div>
+				</form>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<c:forEach var="list" items="${list}">
+								<div class="part_Box">
+								    <div>
+								        <h3>새로운 파트너스 신청 : ${list.PartnerName}</h3>
+								        <div>
+								            <div class="Df">
+								                <div class="part_Text">
+								                    <p class="m-0">대표자 명 : </p>
+								                    <p class="m-0">${list.OwnerName}</p>
+								                </div>
+								                <div class="part_Text">
+								                    <p class="m-0">E-Mail :</p>
+								                     <p class="m-0">${list.OwnerEmail}</p>
+								                </div>
+								            </div>
+								        </div>
+								
+								        <div class="Df">
+								            <div class="part_Text">
+								                 <p class="m-0">전화번호 :  </p>
+								                 <p class="m-0">${list.PhoneNumber}</p>
+								            </div>
+								            <div class="part_Text">
+								                 <p class="m-0">사업자 번호 : </p>
+								                 <p class="m-0">${list.PartnerBN}</p>
+								            </div>
+								            <div class="part_Text">
+								                 <p class="m-0">계좌번호 : </p>
+								                 <p class="m-0">${list.BankName} ${list.BankAccount}</p>
+								            </div>
+								            <div class="part_Text">
+								                <div>
+								                    <div>
+								
+								                        <button type="button"
+								                            class="btn btn-primary waves-effect waves-light"
+								                            id="sa-params">체크 하기</button>
+								                    </div>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
+								</div>
+							</c:forEach>
+			 			</div>
+			 		</div>	
+			 	</div>
+			</div>			
 		</div>
-	</c:forEach>
-</html>
-
-
+	</div>
+ </div>

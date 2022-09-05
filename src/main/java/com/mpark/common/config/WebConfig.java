@@ -56,6 +56,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/img/**").addResourceLocations("img/").setCachePeriod(31536000);
 		registry.addResourceHandler("/js/**").addResourceLocations("js/").setCachePeriod(31536000);
 		registry.addResourceHandler("/common/**").addResourceLocations("common/").setCachePeriod(31536000);
+		registry.addResourceHandler("/assets/**").addResourceLocations("assets/").setCachePeriod(31536000);
+		registry.addResourceHandler("/static/**").addResourceLocations("static/").setCachePeriod(31536000);
 		registry.addResourceHandler("/file/**").addResourceLocations("file/").setCachePeriod(31536000);
 		registry.addResourceHandler("/modal/**").addResourceLocations("modal/").setCachePeriod(31536000);
 
@@ -88,6 +90,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
 		urlList.add("/myImg/**");
 		urlList.add("/modal/**");
 		urlList.add("/common/**");
+		urlList.add("/assets/**");
+		urlList.add("/static/**");
 
 		urlList.add("/admin/login");
 		urlList.add("/admin/loginProcess");

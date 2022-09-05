@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mpark.common.util.RestTemplateUtil;
+import com.mpark.common.util.StringUtil;
 
 @Controller
 @SessionAttributes("token")
@@ -29,15 +30,14 @@ public class AdminPartnerController {
 
 	@RequestMapping(value = { "/", "/admin/index", ""})
 	public ModelAndView index(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
 		mv.addObject("resultCode", resultCode);
-		
 		if (resultCode == 200) {
 			ObjectMapper mapper = new ObjectMapper();
 			String result = responseEntity.getBody();
-			List<?> list = mapper.readValue(result, List.class);
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> list = (List<?>) map.get("Results");
 			mv.addObject("list", list);
 			mv.setViewName("/admin/partner/partnerSingeList");
 		} else {
@@ -56,7 +56,8 @@ public class AdminPartnerController {
 		if (resultCode == 200) {
 			ObjectMapper mapper = new ObjectMapper();
 			String result = responseEntity.getBody();
-			List<?> list = mapper.readValue(result, List.class);
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> list = (List<?>) map.get("Results");
 			mv.addObject("list", list);
 		}
 
