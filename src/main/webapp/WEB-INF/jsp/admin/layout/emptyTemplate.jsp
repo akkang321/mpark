@@ -9,9 +9,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title><tiles:getAsString name="title" /></title>
-<script src="/js/admin/jquery.js"></script>
-<link rel="stylesheet" href="/css/admin/web.css">
-<link rel="stylesheet" href="/css/admin/reset.css">
+<script src="/common/jquery.js"></script>
+<link rel="stylesheet" href="/css/web.css">
+<link rel="stylesheet" href="/css/reset.css">
+
 </head>
 	<tiles:insertAttribute name="body" />
 </html>
