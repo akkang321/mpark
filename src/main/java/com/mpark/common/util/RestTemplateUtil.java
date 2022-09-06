@@ -1,5 +1,8 @@
 package com.mpark.common.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +32,7 @@ public static ResponseEntity<String> sendPostRequest(String url, String token) {
 	}
 	
 
-public static ResponseEntity<String>  sendPostRequest(String url, String token ,MultiValueMap<String, String> param) {
+public static ResponseEntity<String>  sendPostRequest(String url, String token ,Map<String, String> param) {
 	
 	RestTemplate restTemplate = new RestTemplate();
 
@@ -37,7 +40,7 @@ public static ResponseEntity<String>  sendPostRequest(String url, String token ,
 	headers.set("Content-Type", "application/json");
 	headers.set("Authorization", "Bearer "+token);
 
-	HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers); 
+	HttpEntity<Map<String, String>> request = new HttpEntity<>(param, headers); 
 	ResponseEntity<String> responseEntity = restTemplate.postForEntity(apiUrl+url, request, String.class);	
 											
 	return responseEntity;

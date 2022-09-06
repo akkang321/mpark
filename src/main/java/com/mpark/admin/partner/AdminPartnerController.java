@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -78,8 +79,8 @@ public class AdminPartnerController {
 	
 	@RequestMapping(value = {"/admin/getPartner"})
 	public ModelAndView getPartner(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-		MultiValueMap<String,String> param = new LinkedMultiValueMap<>();
-		param.add("PartnerBN", "86111"); 
+		Map<String,String> param = new HashedMap();
+		param.put("PartnerBN", "86111"); 
 		
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPartner", token, param);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
