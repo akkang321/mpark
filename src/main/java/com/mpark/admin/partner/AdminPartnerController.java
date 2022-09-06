@@ -24,22 +24,23 @@ import com.mpark.common.util.StringUtil;
 
 @Controller
 @SessionAttributes("token")
-public class AdminPartnerController {
+public class AdminPartnerController {  
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-
+//
 	@RequestMapping(value = { "/", "/admin/index", ""})
 	public ModelAndView index(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
-		mv.addObject("resultCode", resultCode);
-		if (resultCode == 200) {
+		mv.addObject("resultCode", resultCode); 
+		if (resultCode == 200) { 
+			
+			//test
 			ObjectMapper mapper = new ObjectMapper();
 			String result = responseEntity.getBody();
 			Map<String, Object> map = mapper.readValue(result, Map.class);
 			List<?> list = (List<?>) map.get("Results");
 			mv.addObject("list", list);
-			mv.setViewName("/admin/partner/partnerSingeList");
+			mv.setViewName("/admin/partner/partnerSingeList"); 
 		} else {
 			mv.setViewName("redirect:/admin/logout");
 		}
