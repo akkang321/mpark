@@ -25,46 +25,25 @@ import com.mpark.common.util.StringUtil;
 @Controller
 @SessionAttributes("token")
 public class AdminPartnerController {  
-
-//
-	@RequestMapping(value = { "/", "/admin/index", ""})
-	public ModelAndView index(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
-		int resultCode = responseEntity.getStatusCodeValue();
-		mv.addObject("resultCode", resultCode); 
-		if (resultCode == 200) { 
-			
-			//test
-			ObjectMapper mapper = new ObjectMapper();
-			String result = responseEntity.getBody();
-			Map<String, Object> map = mapper.readValue(result, Map.class);
-			List<?> list = (List<?>) map.get("Results");
-			mv.addObject("list", list);
-			mv.setViewName("/admin/partner/partnerSingeList"); 
-		} else {
-			mv.setViewName("redirect:/admin/logout");
-		}
-		return mv;
-	}
 	
-	@RequestMapping(value = {"/admin/partnerSingeList"})
-	public ModelAndView partnerSingeList(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-
-		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
-		int resultCode = responseEntity.getStatusCodeValue();
-		mv.addObject("resultCode", resultCode);
-		
-		if (resultCode == 200) {
-			ObjectMapper mapper = new ObjectMapper();
-			String result = responseEntity.getBody();
-			Map<String, Object> map = mapper.readValue(result, Map.class);
-			List<?> list = (List<?>) map.get("Results");
-			mv.addObject("list", list);
-		}
-
-		mv.setViewName("/admin/partner/partnerSingeList");
-		return mv;
-	}
+//	@RequestMapping(value = {"/admin/getPendingPartners"})
+//	public ModelAndView partnerSingeList(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
+//
+//		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
+//		int resultCode = responseEntity.getStatusCodeValue();
+//		mv.addObject("resultCode", resultCode);
+//		
+//		if (resultCode == 200) {
+//			ObjectMapper mapper = new ObjectMapper();
+//			String result = responseEntity.getBody();
+//			Map<String, Object> map = mapper.readValue(result, Map.class);
+//			List<?> list = (List<?>) map.get("Results");
+//			mv.addObject("list", list);
+//		}
+//
+//		mv.setViewName("/admin/partner/partnerSingeList");
+//		return mv;
+//	}
 
 /*
 	@RequestMapping(value = { "/admin/getPartners" })
@@ -74,27 +53,50 @@ public class AdminPartnerController {
 */
 
 	
-	@RequestMapping(value = { "/admin/partnerList" })
-	public ModelAndView getPartners(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException { 
-
+//	@RequestMapping(value = { "/admin/partnerList" })
+//	public ModelAndView getPartners(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException { 
+//
+//		MultiValueMap<String,String> param = new LinkedMultiValueMap<>();
+//		param.add("Mode", "DEFAULT"); 
+//		param.add("Keyword", "");
+//
+//		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("getPartners", token, param); 
+//		int resultCode = responseEntity.getStatusCodeValue();
+//		mv.addObject("resultCode", resultCode);
+//
+//		if(resultCode == 200) { 
+//			ObjectMapper mapper = new ObjectMapper();
+//			String result = responseEntity.getBody();
+//			List<?> list = mapper.readValue(result, List.class);
+//			mv.addObject("list", list); 
+//		}
+//
+//		mv.setViewName("/admin/partner/partnerList"); 
+//		return mv; 
+//	}
+	
+	
+	@RequestMapping(value = {"/admin/getPartner"})
+	public ModelAndView getPartner(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
 		MultiValueMap<String,String> param = new LinkedMultiValueMap<>();
-		param.add("Mode", "DEFAULT"); 
-		param.add("Keyword", "");
-
-		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("getPartners", token, param); 
+		param.add("PartnerBN", "86111"); 
+		
+		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPartner", token, param);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
 		mv.addObject("resultCode", resultCode);
-
-		if(resultCode == 200) { 
+		
+		if (resultCode == 200) {
 			ObjectMapper mapper = new ObjectMapper();
 			String result = responseEntity.getBody();
-			List<?> list = mapper.readValue(result, List.class);
-			mv.addObject("list", list); 
+			Map<String, Object> info = mapper.readValue(result, Map.class);
+			mv.addObject("info", info); 
 		}
 
-		mv.setViewName("/admin/partner/partnerList"); 
-		return mv; 
+		mv.setViewName("/admin/partner/partnerInfo");
+		return mv;
 	}
+
+	
 }
 
 
