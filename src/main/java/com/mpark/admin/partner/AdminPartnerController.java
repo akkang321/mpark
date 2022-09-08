@@ -96,6 +96,27 @@ public class AdminPartnerController {
 		mv.setViewName("/admin/partner/partnerInfo");
 		return mv;
 	}
+	
+	@RequestMapping(value = {"/admin/getParkingHistory"})
+	public ModelAndView getParkingHistory(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
+//		Map<String,String> param = new HashedMap();
+//		param.put("PartnerBN", "86111"); 
+//		
+//		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetParkingHistory", token, param);		// 승인 대기중인 파트너사들 URL 
+//		int resultCode = responseEntity.getStatusCodeValue();
+//		mv.addObject("resultCode", resultCode);
+//		
+//		if (resultCode == 200) {
+//			ObjectMapper mapper = new ObjectMapper();
+//			String result = responseEntity.getBody();
+//			Map<String, Object> info = mapper.readValue(result, Map.class);
+//			mv.addObject("info", info); 
+//		}
+
+		mv.setViewName("/admin/partner/partnerEntranceAndExit");
+		return mv;
+	}	
+	
 
 	
 }
