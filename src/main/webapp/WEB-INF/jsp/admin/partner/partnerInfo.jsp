@@ -16,8 +16,8 @@
                                         <div class="Df W100 padding15">
                                             <div class="back_Box">
                                                 <div class="Df Ac W100">
-                                                    <h1 class="Wc7">미팍 1호점</h1>
-                                                    <p class="m-0 Wc8">이지섭</p>
+                                                    <h1 class="Wc7">${info.PartnerName}</h1>
+                                                    <p class="m-0 Wc8">${info.OwnerName}</p>
                                                     <div class="C_button">
                                                         <button type="button"
                                                             class="btn btn-primary waves-effect waves-light"
@@ -55,7 +55,7 @@
 
                                                     </td>
                                                     <td colspan="3">
-                                                        <p class="in_text m-0"> 미팍 1호점</p>
+                                                        <p class="in_text m-0"> ${info.PartnerName}</p>
                                                         <input type="text" class="put_text">
                                                     </td>
                                                 </tr>
@@ -64,7 +64,7 @@
                                                         <h5 class="m-0">연락처</h5>
                                                     </td>
                                                     <td colspan="3">
-                                                        <p class="in_text m-0">010-1234-5678</p>
+                                                        <p class="in_text m-0">${info.PartnerName}</p>
                                                         <input type="text" class="put_text">
                                                     </td>
                                                 </tr>
@@ -73,7 +73,7 @@
                                                         <h5 class="m-0">E-Mail</h5>
                                                     </td>
                                                     <td colspan="3">
-                                                        <p class="in_text m-0">me.park@gmail.com</p>
+                                                        <p class="in_text m-0">${info.OwnerEmail}</p>
                                                         <input type="text" class="put_text">
                                                     </td>
                                                 </tr>
@@ -82,7 +82,7 @@
                                                         <h5 class="m-0">주차장 주소</h5>
                                                     </td>
                                                     <td colspan="3">
-                                                        <p class="in_text m-0">서울특별시 서초구 서초동 12-31</p>
+                                                        <p class="in_text m-0">${info.ParkingLot}</p>
                                                         <input type="text" class="put_text">
                                                     </td>
                                                 </tr>
@@ -92,7 +92,7 @@
                                                             <h5 class="m-0">사업자번호</h5>
                                                         </td>
                                                         <td colspan="2">
-                                                            <p class="in_text m-0">(선택사항)</p>
+                                                            <p class="in_text m-0">${info.PartnerBN}</p>
                                                             <input type="text" class="put_text">
                                                         </td>
                                                     </div>
@@ -107,7 +107,7 @@
                                                         <h5 class="m-0">계좌번호</h5>
                                                     </td>
                                                     <td colspan="3">
-                                                        <p class="in_text m-0">45-4848-2151584(농협)</p>
+                                                        <p class="in_text m-0">${info.BankAccount}</p>
                                                         <input type="text" class="put_text">
                                                     </td>
                                                 </tr>
@@ -118,10 +118,10 @@
                                                     <td colspan="3">
                                                         <div class="Df_JC AC">
                                                             <p class="m-0">현금 수수료 :</p>
-                                                            <p class="mr30 m-0 in_text"><u>0%</u> </p>
+                                                            <p class="mr30 m-0 in_text"><u>${info.PaymentFee}%</u> </p>
                                                             <input type="text" class="put_text">
                                                             <p class="m-0">간편결제 수수료 :</p>
-                                                            <p class="in_text m-0"><u>6%</u></p>
+                                                            <p class="in_text m-0"><u>${info.CashFee}%</u></p>
                                                             <input type="text" class="put_text text_put">
                                                         </div>
                                                     </td>

@@ -40,40 +40,40 @@ public class AdminPartnerPendingController {
 			Map<String, Object> map = mapper.readValue(result, Map.class);
 			List<?> list = (List<?>) map.get("Results");
 			mv.addObject("list", list);
-			mv.setViewName("/admin/partner/partnerSingeList"); 
+			mv.setViewName("/admin/partnerPending/partnerSingeList"); 
 		} else {
 			mv.setViewName("redirect:/admin/logout");
 		}
 		return mv;
 	}
 	
-//	@RequestMapping(value = {"/admin/getPendingPartners"})
-//	public ModelAndView partnerSingeList(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-//
-//		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
-//		int resultCode = responseEntity.getStatusCodeValue();
-//		mv.addObject("resultCode", resultCode);
-//		
-//		if (resultCode == 200) {
-//			ObjectMapper mapper = new ObjectMapper();
-//			String result = responseEntity.getBody();
-//			Map<String, Object> map = mapper.readValue(result, Map.class);
-//			List<?> list = (List<?>) map.get("Results");
-//			mv.addObject("list", list);
-//		}
-//
-//		mv.setViewName("/admin/partner/partnerSingeList");
-//		return mv;
-//	}
-//
-///*
-//	@RequestMapping(value = { "/admin/getPartners" })
-//	public String partnersList() {
-//		return "/admin/partner/partnerList";
-//	}
-//*/
-//
-//	
+	@RequestMapping(value = {"/admin/getPendingPartners"})
+	public ModelAndView partnerSingeList(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
+
+		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
+		int resultCode = responseEntity.getStatusCodeValue();
+		mv.addObject("resultCode", resultCode);
+		
+		if (resultCode == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntity.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> list = (List<?>) map.get("Results");
+			mv.addObject("list", list);
+		}
+
+		mv.setViewName("/admin/partnerPending/partnerSingeList");
+		return mv;
+	}
+
+/*
+	@RequestMapping(value = { "/admin/getPartners" })
+	public String partnersList() {
+		return "/admin/partner/partnerList";
+	}
+*/
+
+	
 //	@RequestMapping(value = { "/admin/partnerList" })
 //	public ModelAndView getPartners(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException { 
 //
