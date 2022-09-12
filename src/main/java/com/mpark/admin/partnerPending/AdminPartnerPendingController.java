@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +66,10 @@ public class AdminPartnerPendingController {
 		mv.setViewName("/admin/partnerPending/partnerSingeList");
 		return mv;
 	}
+	
+	
+	
+	
 
 /*
 	@RequestMapping(value = { "/admin/getPartners" })

@@ -116,9 +116,6 @@ public class AdminPartnerController {
 		mv.setViewName("/admin/partner/partnerEntranceAndExit");
 		return mv;
 	}	
-	
-
-	
 }
 
 
