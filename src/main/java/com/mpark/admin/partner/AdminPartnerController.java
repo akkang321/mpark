@@ -79,7 +79,7 @@ public class AdminPartnerController {
 	
 	@RequestMapping(value = {"/admin/getPartner"})
 	public ModelAndView getPartner(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-		Map<String,String> param = new HashedMap();
+		Map<String,Object> param = new HashedMap();
 		param.put("PartnerBN", "86111"); 
 		
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPartner", token, param);		// 승인 대기중인 파트너사들 URL 

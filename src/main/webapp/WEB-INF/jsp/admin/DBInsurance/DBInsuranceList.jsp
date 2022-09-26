@@ -30,8 +30,8 @@ function searchList(){
                                             <div>
                                                 <div>
                                                     <p class="m-0">
-                                                     	<input type="date"  id="StartDate" 	name="StartDate" value="기간별 검색" class="calendar"> ~ 
-                                                    	<input type="date"  id="EndDate"	name="EndDate"	 value="기간별 검색" class="calendar"></p>
+                                                     	<input type="date"  id="StartDate" 	name="StartDate" value="${StartDate}" class="calendar" style="width: 120px;"> ~ 
+                                                    	<input type="date"  id="EndDate"	name="EndDate"	 value="${EndDate}" class="calendar" style="width: 120px;"></p>
                                                 </div>
                             
                                                 <div class="insurance_Text_B ">
@@ -141,8 +141,7 @@ function searchList(){
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            Copyright &copy; 2022.Company name All rights reserved.<a target="_blank"
-                                href="https://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                            Copyright &copy; 2022.Company name All rights reserved
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">

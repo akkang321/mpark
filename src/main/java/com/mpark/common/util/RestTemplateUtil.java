@@ -32,7 +32,7 @@ public static ResponseEntity<String> sendPostRequest(String url, String token) {
 	}
 	
 
-public static ResponseEntity<String>  sendPostRequest(String url, String token ,Map<String, String> param) {
+public static ResponseEntity<String>  sendPostRequest(String url, String token ,Map<String, Object> param) {
 	
 	RestTemplate restTemplate = new RestTemplate();
 
@@ -40,7 +40,7 @@ public static ResponseEntity<String>  sendPostRequest(String url, String token ,
 	headers.set("Content-Type", "application/json");
 	headers.set("Authorization", "Bearer "+token);
 
-	HttpEntity<Map<String, String>> request = new HttpEntity<>(param, headers); 
+	HttpEntity<Map<String, Object>> request = new HttpEntity<>(param, headers); 
 	ResponseEntity<String> responseEntity = restTemplate.postForEntity(apiUrl+url, request, String.class);	
 											
 	return responseEntity;
