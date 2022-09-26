@@ -62,6 +62,7 @@ public class AdminPartnerPendingController {
 			List<?> list = (List<?>) map.get("Results");
 			mv.addObject("list", list);
 		}
+		
 
 		mv.setViewName("/admin/partnerPending/partnerSingeList");
 		return mv;
