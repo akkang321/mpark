@@ -78,7 +78,7 @@
 
                         </li>
                         <li>
-                            <a href="./premium.html" class=" waves-effect">
+                            <a href="/admin/getDBManagement" class=" waves-effect">
                                 <i class="ri-shield-user-line"></i>
                                 <span>DB손해보험 관리페이지</span>
                             </a>

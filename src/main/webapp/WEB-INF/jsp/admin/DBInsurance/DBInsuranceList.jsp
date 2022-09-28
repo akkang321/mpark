@@ -9,7 +9,12 @@ function searchList(){
 	$("#frm").submit();
 	
 }
-	
+
+function goPage(pageNo){
+	$("#pageNo").val(pageNo);
+	$("#frm").attr("action","/admin/getDBManagement");
+	$("#frm").submit();
+}
 	
 </script>
 
@@ -18,9 +23,6 @@ function searchList(){
 
             <div class="page-content">
                 <div class="container-fluid">
-
-
-
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -124,6 +126,7 @@ function searchList(){
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <c:import url="page.jsp" />
                                         </div>
                                     </div>
                                 </div>

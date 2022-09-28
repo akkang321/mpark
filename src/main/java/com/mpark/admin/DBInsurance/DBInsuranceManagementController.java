@@ -72,7 +72,9 @@ public class DBInsuranceManagementController {
 		page.setTotalCount(tCnt);
 		param.put("CurrentIdx",page.getsCnt()); 
 		param.put("PageSize", page.getPageSize());
-
+		
+		mv.addObject("page", page);
+		
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagement", token, param);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
 		mv.addObject("resultCode", resultCode);
