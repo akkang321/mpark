@@ -56,23 +56,22 @@ public class DBInsuranceManagementController {
 		}
 		
 		
-//		int tCnt = 0;
-//		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetDBManagementCnt", token, param);		// 
-//		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
-//		if (resultCodeCnt == 200) {
-//			ObjectMapper mapper = new ObjectMapper();
-//			String result = responseEntityCnt.getBody();
-//			Map<String, Object> map = mapper.readValue(result, Map.class);
-//			tCnt = Integer.parseInt(StringUtil.nvl(map.get("TOTAL_CNT")));
-//		}
-//		
-//		
-//		PageUtil page = new PageUtil();
-//		page.setPageNo(Integer.parseInt(StringUtil.nvl(param.get("pageNo"), "1")));
-//		page.setPageSize(20); 
-//		page.setTotalCount(tCnt);
-//		param.put("S_CNT",page.getsCnt()); 
-//		param.put("E_CNT", page.getPageSize());
+		int tCnt = 0;
+		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetDBManagementCount", token, param);		// 
+		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
+		if (resultCodeCnt == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntityCnt.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			tCnt = Integer.parseInt(StringUtil.nvl(map.get("Count")));
+		}	
+		
+		PageUtil page = new PageUtil();
+		page.setPageNo(Integer.parseInt(StringUtil.nvl(param.get("pageNo"), "1")));
+		page.setPageSize(20); 
+		page.setTotalCount(tCnt);
+		param.put("CurrentIdx",page.getsCnt()); 
+		param.put("PageSize", page.getPageSize());
 
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagement", token, param);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
