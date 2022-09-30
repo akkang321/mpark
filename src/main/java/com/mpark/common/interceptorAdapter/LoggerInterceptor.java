@@ -22,6 +22,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			response.sendRedirect("/admin/login");
 			return false;
 		} else {
+			
 			session.setMaxInactiveInterval(60 * 60);
 			return true;
 		}

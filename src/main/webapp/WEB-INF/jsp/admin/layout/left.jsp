@@ -26,8 +26,8 @@
                 <div id="sidebar-menu">
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title">Menu</li>
-
+                        <li class="menu-title">Menu </li>
+						<c:if test="${googleEmail != 'dbdirect@mrpark1.com'}">
                         <li>
                             <a href="./index.html" class="waves-effect">
                                 <i class="ri-dashboard-line"></i><span
@@ -76,6 +76,7 @@
                             </a>
 
                         </li>
+                        </c:if>
                         <li>
                             <a href="/admin/getDBManagement" class=" waves-effect">
                                 <i class="ri-shield-user-line"></i>

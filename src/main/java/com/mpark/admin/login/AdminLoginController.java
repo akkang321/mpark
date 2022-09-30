@@ -25,7 +25,14 @@ public class AdminLoginController {
 	public ModelAndView loginProcess(@RequestParam Map<String, Object> param, HttpServletRequest request,ModelAndView mv) throws Exception { 
 		HttpSession session = request.getSession();
 		session.setAttribute("token", param.get("token"));
-		mv.setViewName("redirect:/admin/index");
+		session.setAttribute("googleEmail", param.get("googleEmail"));
+		
+		String googleEmail = StringUtil.nvl(session.getAttribute("googleEmail"));
+		if (googleEmail.equals("dbdirect@mrpark1.com")) {
+			mv.setViewName("redirect:/admin/getDBManagement");
+		} else {
+			mv.setViewName("redirect:/admin/index");
+		}
 		return mv;
 	}
 

@@ -50,6 +50,7 @@
   </div>
 <form id="frm" action="">
 	<input type="hidden" id="token" name="token">
+	<input type="hidden" id="googleEmail" name="googleEmail">
 </form>
   
 <script>
@@ -71,6 +72,7 @@ function init() {
 function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
 	$("#token").val(googleUser.getAuthResponse().id_token);
+	$("#googleEmail").val(googleUser.ov.Zv);
 	$("#frm").attr("action","/admin/loginProcess");
 	$("#frm").submit();
 }
