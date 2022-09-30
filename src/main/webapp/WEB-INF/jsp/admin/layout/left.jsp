@@ -14,7 +14,6 @@
                 <!-- User details -->
                 <div class="user-profile text-center mt-3">
                     <div class="">
-                        <img src="/static/picture/avatar-1.jpg" alt="" class="avatar-md rounded-circle">
                     </div>
                     <!-- <div class="mt-3">
                         <h4 class="font-size-16 mb-1">Julia Hudda </p>
@@ -37,41 +36,41 @@
                             </a>
                         </li>
                         <li>
-                            <a href="" class="waves-effect">
+                            <a href="#" class="waves-effect">
                                 <i class="fa fa-address-card-o"></i>
                                 <span>파트너스 신청</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="./partnersdetail_1.html" class="waves-effect">
+                            <a href="#" class="waves-effect">
                                 <i class="ri-team-line"></i>
                                 <span>파트너스</span>
                             </a>
                         </li>
                         <li>
-                            <a href="./client.html" class="waves-effect">
+                            <a href="#" class="waves-effect">
                                 <i class="ri-account-circle-line"></i>
                                 <span>고객</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="./Partners_Sales.html" class=" waves-effect"><i class="ri-line-chart-line"></i>
+                            <a href="#" class=" waves-effect"><i class="ri-line-chart-line"></i>
                                 <span>파트너스 매출관리</span>
                             </a>
 
                         </li>
 
                         <li>
-                            <a href="./total_sales.html" class="waves-effect"><i class="ri-pie-chart-2-fill"></i>
+                            <a href="#" class="waves-effect"><i class="ri-pie-chart-2-fill"></i>
                                 <span>전체 매출관리</span>
                             </a>
 
                         </li>
                       
                         <li>
-                            <a href="./premium_1.html" class=" waves-effect">
+                            <a href="#" class=" waves-effect">
                                 <i class="ri-shield-user-line"></i>
                                 <span>미팍 예치금관리</span>
                             </a>
