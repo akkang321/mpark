@@ -21,7 +21,7 @@ public class TilesConfig implements WebMvcConfigurer {
 	public TilesConfigurer tilesConfigurer() {
 
 		TilesConfigurer tiles = new TilesConfigurer();
-		tiles.setDefinitions(new String[] {"/WEB-INF/tiles/admin_tiles.xml"});
+		tiles.setDefinitions(new String[] {"/WEB-INF/tiles/adminTiles.xml"});
 		return tiles;
 	}
 
