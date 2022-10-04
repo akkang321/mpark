@@ -33,9 +33,13 @@ function goPage(pageNo){
                                                 <div>
                                                     <p class="m-0">
                                                      	<input type="date"  id="StartDate" 	name="StartDate" value="${StartDate}" class="calendar" style="width: 120px;"> ~ 
-                                                    	<input type="date"  id="EndDate"	name="EndDate"	 value="${EndDate}" class="calendar" style="width: 120px;"></p>
+                                                    	<input type="date"  id="EndDate"	name="EndDate"	 value="${EndDate}" class="calendar" style="width: 120px;">
+                                                    	<input type="submit" value="검색">
+                                                    	</p>
+                                                    	
+                                                    	
                                                 </div>
-                            
+                                                                            
                                                 <div class="insurance_Text_B ">
                                                     <div class="parking">
                                                         <div>
@@ -83,7 +87,7 @@ function goPage(pageNo){
                             
                                                 <div class="Search">
                                                     <div>
-                                                        <input type="text" name="Keyword" id="Keyword" value="${param.Keyword}">
+                                                        <input type="text" name="Keyword" id="Keyword" value="${param.Keyword}" placeholder="주차장명 or 차량번호">
                                                         <p onclick="searchList()" id="Search">검색</p>
                                                     </div>
                                                 </div>

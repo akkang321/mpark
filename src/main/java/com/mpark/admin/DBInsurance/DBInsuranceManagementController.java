@@ -30,7 +30,6 @@ import com.mpark.common.util.PageUtil;
 @Controller
 @SessionAttributes("token")
 public class DBInsuranceManagementController {  
-	
 	@RequestMapping(value = {"/admin/getDBManagement"})
 	public ModelAndView getDBManagement(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
 		/*
