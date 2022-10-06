@@ -87,7 +87,7 @@ function goPage(pageNo){
                             
                                                 <div class="Search">
                                                     <div>
-                                                        <input type="text" name="Keyword" id="Keyword" value="${param.Keyword}" placeholder="주차장명 or 차량번호">
+                                                        <input type="text" name="Keyword" id="Keyword" value="${param.Keyword}" placeholder="  주차장명 or 차량번호">
                                                         <p onclick="searchList()" id="Search">검색</p>
                                                     </div>
                                                 </div>
@@ -115,7 +115,17 @@ function goPage(pageNo){
 	                                                            <td class="">${list.EnterDateTime}</td>
 	                                                            <td class="">${list.ExitDateTime}</td>
 	                                                            <td class="">${list.ParkingLotAddress}</td>
-	                                                            <td class="">${list.Insurance}</td>
+	                                                            <td class="">
+	                                                            	<c:choose>
+	                                                            		<c:when test="${list.Insurance == 'A'}">
+	                                                            			기본형
+	                                                            		</c:when>
+	                                                            		<c:otherwise>
+	                                                            			렌트형
+	                                                            		</c:otherwise>
+	                                                            	</c:choose>
+	                                                            
+	                                                            </td>
 	                                                            <td class="">
 	                                                            	<c:choose>
 	                                                            		<c:when test="${list.Insurance == 'A'}">
