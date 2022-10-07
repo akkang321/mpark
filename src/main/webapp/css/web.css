@@ -780,3 +780,28 @@ justify-content: center;
 .google_login{
   width: 100%; height: auto;
 }
+.table_border{
+  border: 1px solid black;
+}
+.table_body tr td,
+.table_border thead tr td{
+  border: 1px solid black;
+  font-size: 1.2rem;
+  padding: 10px;
+}
+.table_body{
+  text-align: center;
+}
+
+.open_table{ display: none; 
+  background-color: rgba(117, 117, 117, 0.459); position: absolute; top:0; left: 0; width: 100%; height: 100%; z-index: 1000;
+}
+.open_table_Box{
+  display: flex; align-items: center; justify-content: center;     margin-left: 339px;     margin-top: 190px;
+}
+.open_table_Box_Sub{
+  background-color: white; width: 600px; height: 600px; padding: 15px; overflow-y: scroll;
+}
+.close{
+  width: 100%;display: flex; justify-content: flex-end; margin-bottom: 20px; cursor: pointer;
+}

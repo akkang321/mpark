@@ -15,13 +15,22 @@ function goPage(pageNo){
 	$("#frm").attr("action","/admin/getDBManagement");
 	$("#frm").submit();
 }
+function table(){
+    $('.open_table').css(
+        'display','block'
+    )
+}
+function table_close(){
+    $('.open_table').css(
+        'display','none'
+    )
+}
 	
 </script>
+<form id="frm" method="post" action="" >
+        <div class="main-content" >
 
-<form id="frm" method="post" action="">
-        <div class="main-content">
-
-            <div class="page-content">
+            <div class="page-content" style="position: relative;">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
@@ -42,7 +51,7 @@ function goPage(pageNo){
                                                                             
                                                 <div class="insurance_Text_B ">
                                                     <div class="parking">
-                                                        <div>
+                                                        <div  onclick="table()" style="cursor: pointer;">
                                                             <p class="m-0">현 주차장 수 : </p>
                                                             <p class="m-0">${map.AllParkingLotCount}</p>
                                                         </div>
@@ -151,6 +160,7 @@ function goPage(pageNo){
                     </div>
 
                 </div> <!-- container-fluid -->
+            
             </div>
             <!-- End Page-content -->
 
@@ -173,3 +183,36 @@ function goPage(pageNo){
         <!-- end main content-->
 </form>
 
+<link rel="stylesheet" href="../../../../css/web.css">
+
+<div>
+    <div class="open_table">
+        <div class="open_table_Box">
+            <div class="open_table_Box_Sub">
+                <p class="close" onclick="table_close()">닫기</p>
+                <table style="padding: 20px;" class="table_border ">
+                    <thead style="text-align: center;" >
+                        <tr>
+                            <td>주차장명</td>
+                            <td>주소</td>
+                            <td>보험종류</td>
+                        </tr>
+                    </thead>
+                    <tbody class="table_body">
+                        <tr>
+                            <td>미팍 주차장</td>
+                            <td>서울시 강남구 언주역</td>
+                            <td>미팍 보험류</td>
+                        </tr>
+
+                        <tr>
+                            <td>미팍 주차장</td>
+                            <td>서울시 강남구 언주역</td>
+                            <td>미팍 보험류</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  
+        </div>
+    </div>
+</div>
