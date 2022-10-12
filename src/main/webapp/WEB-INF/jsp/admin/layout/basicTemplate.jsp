@@ -54,7 +54,7 @@
     <script src="/static/js/waves.min.js"></script>
 
     <!-- apexcharts -->
-    <script src="/static/js/apexcharts.min.js"></script>
+    
     <!-- jquery.vectormap map -->
     <script src="/static/js/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="/static/js/jquery-jvectormap-us-merc-en.js"></script>
@@ -65,7 +65,7 @@
     <!-- Responsive examples -->
     <script src="/static/js/dataTables.responsive.min.js"></script>
     <script src="/static/js/responsive.bootstrap4.min.js"></script>
-    <script src="/static/js/dashboard.init.js"></script>
+   
     <!-- App js -->
     <script src="/static/js/web.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
