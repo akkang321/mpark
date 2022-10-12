@@ -127,7 +127,7 @@ function table_close(){
 	                                                            <td class="">
 	                                                            	<c:choose>
 	                                                            		<c:when test="${list.Insurance == 'A'}">
-	                                                            			기본형
+	                                                            			일반형
 	                                                            		</c:when>
 	                                                            		<c:otherwise>
 	                                                            			렌트형
@@ -185,34 +185,32 @@ function table_close(){
 
 <link rel="stylesheet" href="../../../../css/web.css">
 
-<div>
-    <div class="open_table">
-        <div class="open_table_Box">
-            <div class="open_table_Box_Sub">
-                <p class="close" onclick="table_close()">닫기</p>
-                <table style="padding: 20px;" class="table_border ">
-                    <thead style="text-align: center;" >
-                        <tr>
-                            <td>주차장명</td>
-                            <td>주소</td>
-                            <td>보험종류</td>
-                        </tr>
-                    </thead>
-                    <tbody class="table_body">
-                        <tr>
-                            <td>미팍 주차장</td>
-                            <td>서울시 강남구 언주역</td>
-                            <td>미팍 보험류</td>
-                        </tr>
-
-                        <tr>
-                            <td>미팍 주차장</td>
-                            <td>서울시 강남구 언주역</td>
-                            <td>미팍 보험류</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>  
-        </div>
-    </div>
-</div>
+<form id="frm" method="post" action="" >
+	<div>
+	    <div class="open_table">
+	        <div class="open_table_Box">
+	            <div class="open_table_Box_Sub">
+	                <p class="close" onclick="table_close()">닫기</p>
+	                <table style="padding: 20px;" class="table_border ">
+	                    <thead style="text-align: center;" >
+	                        <tr>
+	                            <td>주차장명</td>
+	                            <td>주소</td>
+	                            <td>보험종류</td>
+	                        </tr>
+	                    </thead>
+	                    <tbody class="table_body">
+	                    	<c:forEach var="list" items="${listParkingLot}">
+		                        <tr>
+		                            <td>${listParkingLot.Name}</td>
+		                            <td>${listParkingLot.Address}</td>
+		                            <td>${listParkingLot.Insurance}</td>
+		                        </tr>
+	                        </c:forEach>
+	                    </tbody>
+	                </table>
+	            </div>  
+	        </div>
+	    </div>
+	</div>
+</form>

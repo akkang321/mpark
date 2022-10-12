@@ -32,13 +32,6 @@ import com.mpark.common.util.PageUtil;
 public class DBInsuranceManagementController {  
 	@RequestMapping(value = {"/admin/getDBManagement"})
 	public ModelAndView getDBManagement(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
-		/*
-		 * RequestParam은 왜 만들어주었나? => getPartner의 경우도 인자에 @RequestParam 추가해야 하나?
-		 * 인자를 주고받는 흐름을 잘 모르겠어서 전체적인 구조의 흐름에 대한 지식이 필요함 => .jsp 에서 Controller로 인자를 전달받는 과정 및 Controller에서 .jsp로 인자를 전달하는 과
-		 * 현재 .jsp 페이지에서 함수 선언하는 코드 니 자바스크립트인데 스크립트 태그 써서 java 코드로 하면 안되나?
-		 * 페이지 만들고나면 테스트겸 DB 싹 밀어야 하는 게 아닌가?
-		 *  
-		 */
 		if (StringUtil.nvl(param.get("EndDate")).equals("")) {
 		
 			param.put("StartDate", LocalDate.now().minusMonths(1).toString());
@@ -85,6 +78,16 @@ public class DBInsuranceManagementController {
 			List<?> list = (List<?>) map.get("Results");
 			mv.addObject("list", list);
 			mv.addObject("map", map);
+		}
+		
+		ResponseEntity<String> responseParkingLotEntity = RestTemplateUtil.sendPostRequest("GetAllParkingLots", token, param);
+		int resultCodeParkingLot = responseParkingLotEntity.getStatusCodeValue();		
+		if (resultCodeParkingLot == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseParkingLotEntity.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> listParkingLot = (List<?>) map.get("Results");
+			mv.addObject("listParkingLot", listParkingLot);
 		}
 		
 		mv.setViewName("/admin/DBInsurance/DBInsuranceList");

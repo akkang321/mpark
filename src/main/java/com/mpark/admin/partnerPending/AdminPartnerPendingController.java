@@ -27,7 +27,6 @@ import com.mpark.common.util.StringUtil;
 @SessionAttributes("token")
 public class AdminPartnerPendingController {  
 
-//
 	@RequestMapping(value = { "/", "/admin/index", ""})
 	public ModelAndView index(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
@@ -45,6 +44,7 @@ public class AdminPartnerPendingController {
 		} else {
 			mv.setViewName("redirect:/admin/logout");
 		}
+		
 		return mv;
 	}
 	
