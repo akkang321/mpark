@@ -72,7 +72,7 @@ function init() {
 function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
 	$("#token").val(googleUser.getAuthResponse().id_token);
-	$("#googleEmail").val(googleUser.ov.Zv);
+	$("#googleEmail").val(profile.getEmail());
 	$("#frm").attr("action","/admin/loginProcess");
 	$("#frm").submit();
 }
