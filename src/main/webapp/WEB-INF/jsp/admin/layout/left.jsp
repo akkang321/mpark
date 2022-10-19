@@ -36,14 +36,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="waves-effect">
+                            <a href="/admin/index" class="waves-effect">
                                 <i class="fa fa-address-card-o"></i>
                                 <span>파트너스 신청</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="#" class="waves-effect">
+                            <a href="admin/getPartner"waves-effect">
                                 <i class="ri-team-line"></i>
                                 <span>파트너스</span>
                             </a>

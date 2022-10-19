@@ -47,7 +47,6 @@ public class DBInsuranceManagementController {
 			param.put("Keyword", "");
 		}
 		
-		
 		int tCnt = 0;
 		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetDBManagementCount", token, param);		// 
 		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
@@ -91,6 +90,7 @@ public class DBInsuranceManagementController {
 		}
 		
 		mv.setViewName("/admin/DBInsurance/DBInsuranceList");
+		
 		return mv;
 	}
 }

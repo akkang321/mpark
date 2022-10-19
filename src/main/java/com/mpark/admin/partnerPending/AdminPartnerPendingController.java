@@ -31,10 +31,9 @@ public class AdminPartnerPendingController {
 	public ModelAndView index(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();
-		mv.addObject("resultCode", resultCode); 
+		mv.addObject("resultCode", resultCode);
+		
 		if (resultCode == 200) { 
-			
-			//test
 			ObjectMapper mapper = new ObjectMapper();
 			String result = responseEntity.getBody();
 			Map<String, Object> map = mapper.readValue(result, Map.class);
@@ -48,36 +47,29 @@ public class AdminPartnerPendingController {
 		return mv;
 	}
 	
-	@RequestMapping(value = {"/admin/getPendingPartners"})
-	public ModelAndView partnerSingeList(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
+//	@RequestMapping(value = {"/admin/getPendingPartners"})
+//	public ModelAndView partnerSingeList(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
+//
+//		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
+//		int resultCode = responseEntity.getStatusCodeValue();
+//		mv.addObject("resultCode", resultCode);
+//		
+//		if (resultCode == 200) {
+//			ObjectMapper mapper = new ObjectMapper();
+//			String result = responseEntity.getBody();
+//			Map<String, Object> map = mapper.readValue(result, Map.class);
+//			List<?> list = (List<?>) map.get("Results");
+//			mv.addObject("list", list);
+//		}
+//		
+//
+//		mv.setViewName("/admin/partnerPending/partnerSingeList");
+//		return mv;
+//	}
+	
+	
+	
 
-		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPendingPartners", token);		// 승인 대기중인 파트너사들 URL 
-		int resultCode = responseEntity.getStatusCodeValue();
-		mv.addObject("resultCode", resultCode);
-		
-		if (resultCode == 200) {
-			ObjectMapper mapper = new ObjectMapper();
-			String result = responseEntity.getBody();
-			Map<String, Object> map = mapper.readValue(result, Map.class);
-			List<?> list = (List<?>) map.get("Results");
-			mv.addObject("list", list);
-		}
-		
-
-		mv.setViewName("/admin/partnerPending/partnerSingeList");
-		return mv;
-	}
-	
-	
-	
-	
-
-/*
-	@RequestMapping(value = { "/admin/getPartners" })
-	public String partnersList() {
-		return "/admin/partner/partnerList";
-	}
-*/
 
 	
 //	@RequestMapping(value = { "/admin/partnerList" })
