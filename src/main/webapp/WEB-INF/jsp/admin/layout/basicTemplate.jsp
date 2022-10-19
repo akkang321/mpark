@@ -32,7 +32,7 @@
     <link href="/static/css/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/css_plus.css" rel="stylesheet"  type="text/css">
     
-    
+    <link rel="stylesheet" href="/css/web.css">
     
 	<script src="/common/common.js"></script>
 </head>
