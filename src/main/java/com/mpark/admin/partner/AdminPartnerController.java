@@ -142,9 +142,7 @@ public class AdminPartnerController {
 		mv.setViewName("/admin/partner/partnerParkingLotInfo");
 		return mv;
 	}
-	
 
-	
 	// 파트너스 - 직원 목록
 	@RequestMapping(value = {"/admin/getMyPartners"})
 	public ModelAndView getMyPartners(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {

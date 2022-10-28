@@ -47,7 +47,7 @@ function table(){
                                             </div>
                                                                         
                                             <div class="insurance_Text_B ">
-                                                <div class="parking">
+                                                <div class="parking" >
                                                     <div  onclick="table()" style="cursor: pointer;">
                                                         <p class="m-0">현 주차장 수 : </p>
                                                         <p class="m-0">${map.AllParkingLotCount}</p>
@@ -115,7 +115,7 @@ function table(){
                                                 </thead>
                                                 <tbody>
                                                 	<c:forEach var="list" items="${list}">
-                                                     <tr>
+                                                     <tr style="font-size: 1.2rem; font-weight: bold;">
                                                          <td>${list.LP}</td>
                                                          <td class="">${list.Name}</td>
                                                          <td class="">${list.EnterDateTime}</td>
