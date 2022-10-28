@@ -23,6 +23,11 @@ function table(){
 	}
 }
 
+function table_close(){
+	$('#open_table').css('display','none');
+}
+
+
 </script>
 <form id="frm" method="post" action="" >
     <div class="main-content" >
@@ -178,8 +183,8 @@ function table(){
 
     </div>
 
-	<div id="open_table" style="display: none;">
-	    <div  class="open_table" >
+	<div >
+	    <div id="open_table" class="open_table" style="display: none;">
 	        <div class="open_table_Box">
 	            <div class="open_table_Box_Sub">
 	                <p class="close" onclick="table_close()">닫기</p>
