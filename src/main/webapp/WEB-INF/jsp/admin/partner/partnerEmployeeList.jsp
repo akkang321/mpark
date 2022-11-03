@@ -16,8 +16,8 @@
                                 <div class="Df W100 padding15">
                                     <div class="back_Box">
                                         <div class="Df Ac W100">
-                                            <h1 class="Wc7">미팍 1호점</h1>
-                                            <p class="m-0 Wc8">이지섭</p>
+                                            <h1 class="Wc7">미팍 1호ㅇㄴㅁ점</h1>
+                                            <p class="m-0 Wc8">이지ㅇㄴㅁㅇ섭</p>
                                             <div class="C_button">
                                                 <button type="button"
                                                     class="btn btn-primary waves-effect waves-light"
@@ -46,11 +46,9 @@
                                     <div class="PartnersDetailCon2">
                                     	<c:forEach var="list" items="${list}">
 	                                        <table>
-	                                    
 	                                            <div class="tite" >
 	                                                <p class="m-0">${list.ParkingName}</p>
 	                                            </div>
-	                                   
 	                                            <thead>
 	                                                <tr>
 	                                                    <th><h5 class="m-0">이름</h5></th>
@@ -63,49 +61,29 @@
 	                                                  
 	                                                </tr>
 	                                            </thead>
-	                                            <tbody>
-	                                                <tr>
-	                                                    <td>이지섭</td>
-	                                                    <td >010-1234-5678</td>
-	                                                    <td >(최초 파트너는 공란)</td>
-	                                                    <td >me.park@gmail.com</td>
-	                                                    <td >(최초 파트너는 공란)</td>
-	                                                    <td class="padding10"  >
-	                                                        <div class="wh100" >
-	                                                            <select name="" id="" >
-	                                                                <option value="">관리자(정산자)</option>
-	                                                            </select>
-	                                                        </div>
-	                                                    </td>
-	                                                    <td  class="padding8" >
-	                                                        <div class="cursor work"onClick="location.href='work_schedule.html'">
-	                                                            <p >근퇴기록</p>
-	                                                        </div>
-	                                                    </td>
-	                                                </tr>
-	                                       
-	                                                <tr>
-	                                                    <td>임수열</td>
-	                                                    <td >010-1234-5678</td>
-	                                                    <td >1994.04.13</td>
-	                                                    <td >me.park@gmail.com</td>
-	                                                    <td >2022.01.13</td>
-	                                                    <td class="padding10"  >
-	                                                        <div class="wh100" >
-	                                                            <select name="" id="" >
-	                                                                <option value="">관리자(정산자)</option>
-	                                                                <option value="">관리자</option>
-	                                                                <option value="">직원</option>
-	                                                            </select>
-	                                                        </div>
-	                                                    </td>
-	                                                    <td  class="padding8" >
-	                                                        <div class="cursor work" >
-	                                                            <p >근퇴기록</p>
-	                                                        </div>
-	                                                    </td>
-	                                                </tr>
-	                                            </tbody>
+                                            	<tbody>
+	                                            	<c:forEach var="user" items="${list.PartnerUsers}">
+		                                                <tr>
+		                                                    <td>${user.Name}</td>
+		                                                    <td >010-1234-5678</td>
+		                                                    <td >(최초 파트너는 공란)</td>
+		                                                    <td >me.park@gmail.com</td>
+		                                                    <td >(최초 파트너는 공란)</td>
+		                                                    <td class="padding10"  >
+		                                                        <div class="wh100" >
+		                                                            <select name="" id="" >
+		                                                                <option value="">관리자(정산자)</option>
+		                                                            </select>
+		                                                        </div>
+		                                                    </td>
+		                                                    <td  class="padding8" >
+		                                                        <div class="cursor work"onClick="location.href='work_schedule.html'">
+		                                                            <p >근퇴기록</p>
+		                                                        </div>
+		                                                    </td>
+		                                                </tr>	                     
+	                                                </c:forEach>
+												</tbody>
 	                                        </table>
                                        	</c:forEach>
                                     </div>

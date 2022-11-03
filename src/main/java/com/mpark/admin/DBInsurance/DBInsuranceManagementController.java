@@ -33,16 +33,14 @@ public class DBInsuranceManagementController {
 	@RequestMapping(value = {"/admin/getDBManagement"})
 	public ModelAndView getDBManagement(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
 		if (StringUtil.nvl(param.get("EndDate")).equals("")) {
-		
 			param.put("StartDate", LocalDate.now().minusMonths(1).toString());
 			param.put("EndDate", LocalDate.now().toString());
-			
 		}
 		
 		mv.addObject("StartDate",param.get("StartDate"));
 		mv.addObject("EndDate",param.get("EndDate"));
 		
-		// Keyword 없으면 Error 나서 넣었음
+		// Keyword Error 처리
 		if (StringUtil.nvl(param.get("Keyword")).equals("")) {
 			param.put("Keyword", "");
 		}

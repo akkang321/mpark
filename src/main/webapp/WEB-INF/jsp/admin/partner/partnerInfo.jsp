@@ -31,7 +31,7 @@
                                             </div>
 
                                             <div>
-                                                <img src="static/picture/avatar-1.jpg" alt="" class="Mw_Ha">
+                                                <img src=${info.ImgUrl} alt="" class="Mw_Ha">
                                             </div>
                                         </div>
                                     </div>
