@@ -99,6 +99,7 @@ public class AdminPartnerController {
 		return mv;
 	}
 	
+	//파트너스 - 입출차
 	@RequestMapping(value = {"/admin/getParkingHistory"})
 	public ModelAndView getParkingHistory(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
 //		Map<String,String> param = new HashedMap();
