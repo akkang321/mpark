@@ -29,9 +29,12 @@ import com.mpark.common.util.PageUtil;
 
 @Controller
 @SessionAttributes("token")
-public class PartnerPaymentsController {  
+public class PartnerPaymentsController {
+	/*
+	파트너스 매츨 관리
+	 */
 	@RequestMapping(value = {"/admin/getPartnersPayments"})
-	public ModelAndView getDBManagement(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
+	public ModelAndView getPartnersPayments(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
 		// 날짜 미입력시 최근 한달 조회
 		if (StringUtil.nvl(param.get("EndDate")).equals("")) {
 			param.put("StartDate", LocalDate.now().minusMonths(1).toString());

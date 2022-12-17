@@ -43,7 +43,7 @@
                         </li>
 
                         <li>
-                            <a href="admin/getPartner"waves-effect">
+                            <a href="/admin/getPartner" class="waves-effect">
                                 <i class="ri-team-line"></i>
                                 <span>파트너스</span>
                             </a>
@@ -56,7 +56,7 @@
                         </li>
 
                         <li>
-                            <a href="#" class=" waves-effect"><i class="ri-line-chart-line"></i>
+                            <a href="/admin/getPartnersPayments" class=" waves-effect"><i class="ri-line-chart-line"></i>
                                 <span>파트너스 매출관리</span>
                             </a>
 
@@ -70,7 +70,7 @@
                         </li>
                       
                         <li>
-                            <a href="#" class=" waves-effect">
+                            <a href="/admin/getPartnersPoints" class=" waves-effect">
                                 <i class="ri-shield-user-line"></i>
                                 <span>미팍 예치금관리</span>
                             </a>

@@ -29,7 +29,10 @@ import com.mpark.common.util.PageUtil;
 
 @Controller
 @SessionAttributes("token")
-public class PartnerPointController {  
+public class PartnerPointController {
+	/*
+	미팍 예치금관리
+	 */	
 	@RequestMapping(value = {"/admin/getPartnersPoints"})
 	public ModelAndView getPartnersPoints(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
 		// 날짜 미입력시 최근 한달 조회

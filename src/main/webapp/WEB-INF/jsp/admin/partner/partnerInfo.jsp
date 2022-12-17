@@ -40,10 +40,10 @@
                                         <div class="PartnersDetailWrap">
                                             <div class="btm">
                                                 <div class="tabBox">
-                                                    <button onclick="" class="active">상세정보</button>
-                                                    <button onclick="location.href='partnersdetail_2.html'">입출차</button>
-                                                    <button onclick="location.href='partnersdetail_3.html'">주차장 정보</button>
-                                                    <button onclick="location.href='partnersdetail_4.html'">직원목록</button>
+                                                    <button onclick="location.href='/admin/getPartner'" class="active">상세정보</button>
+                                                    <button onclick="location.href='#'">입출차</button>
+                                                    <button onclick="location.href='/admin/getParkingLots'">주차장 정보</button>
+                                                    <button onclick="location.href='/admin/getMyPartners'">직원목록</button>
                                                 </div>
                                             </div>
                                         </div>
