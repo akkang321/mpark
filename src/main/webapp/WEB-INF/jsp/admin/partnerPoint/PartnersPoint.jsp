@@ -10,6 +10,11 @@ function searchList(){
 	$("#frm").submit();	
 }
 
+function goPage(pageNo) {
+    $("#pageNo").val(pageNo);
+    $("#frm").attr("action", "/admin/getPartnersPoints");
+    $("#frm").submit();
+}
 
 </script>
 
@@ -127,6 +132,7 @@ function searchList(){
 	                                            </tbody>
 	                                        </table>
 	                                    </div>
+	                                    <c:import url="page.jsp" />
 	                                </div>
 	                            </div>
 	                        </div>
