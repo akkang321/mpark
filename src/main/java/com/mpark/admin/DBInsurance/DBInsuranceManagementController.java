@@ -32,6 +32,7 @@ import com.mpark.common.util.PageUtil;
 public class DBInsuranceManagementController {  
 	@RequestMapping(value = {"/admin/getDBManagement"})
 	public ModelAndView getDBManagement(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
+		// 날짜 미입력시 최근 한달 조회
 		if (StringUtil.nvl(param.get("EndDate")).equals("")) {
 			param.put("StartDate", LocalDate.now().minusMonths(1).toString());
 			param.put("EndDate", LocalDate.now().toString());
@@ -64,7 +65,7 @@ public class DBInsuranceManagementController {
 		
 		mv.addObject("page", page);
 		
-		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagement", token, param);		// 승인 대기중인 파트너사들 URL 
+		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagement", token, param); 
 		int resultCode = responseEntity.getStatusCodeValue();
 		mv.addObject("resultCode", resultCode);
 		

@@ -48,24 +48,24 @@ public class PartnerPaymentsController {
 			param.put("PartnerName", "");
 		}
 		
-//		int tCnt = 0;
-//		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetDBManagementCount", token, param);		// 
-//		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
-//		if (resultCodeCnt == 200) {
-//			ObjectMapper mapper = new ObjectMapper();
-//			String result = responseEntityCnt.getBody();
-//			Map<String, Object> map = mapper.readValue(result, Map.class);
-//			tCnt = Integer.parseInt(StringUtil.nvl(map.get("Count")));
-//		}	
+		int tCnt = 0;
+		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetPartnersPaymentsCount", token, param);
+		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
+		if (resultCodeCnt == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntityCnt.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			tCnt = Integer.parseInt(StringUtil.nvl(map.get("Count")));
+		}
 		
-//		PageUtil page = new PageUtil();
-//		page.setPageNo(Integer.parseInt(StringUtil.nvl(param.get("pageNo"), "1")));
-//		page.setPageSize(20); 
-//		page.setTotalCount(tCnt);
-//		param.put("CurrentIdx",page.getsCnt()); 
-//		param.put("PageSize", page.getPageSize());
-//		
-//		mv.addObject("page", page);
+		PageUtil page = new PageUtil();
+		page.setPageNo(Integer.parseInt(StringUtil.nvl(param.get("pageNo"), "1")));
+		page.setPageSize(20);
+		page.setTotalCount(tCnt);
+		param.put("CurrentIdx",page.getsCnt());
+		param.put("PageSize", page.getPageSize());
+
+		mv.addObject("page", page);
 		
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPartnersPayments", token, param); 
 		int resultCode = responseEntity.getStatusCodeValue();
