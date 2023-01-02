@@ -65,14 +65,14 @@
 	                                            	<c:forEach var="user" items="${list.PartnerUsers}">
 		                                                <tr>
 		                                                    <td>${user.Name}</td>
-		                                                    <td >010-1234-5678</td>
-		                                                    <td >(최초 파트너는 공란)</td>
-		                                                    <td >me.park@gmail.com</td>
-		                                                    <td >(최초 파트너는 공란)</td>
+		                                                    <td >${user.Contact}</td>
+		                                                    <td >${user.Birth}</td>
+		                                                    <td >${user.Email}</td>
+		                                                    <td >${user.StartDate}</td>
 		                                                    <td class="padding10"  >
 		                                                        <div class="wh100" >
 		                                                            <select name="" id="" >
-		                                                                <option value="">관리자(정산자)</option>
+		                                                                <option value="">${user.Role}</option>
 		                                                            </select>
 		                                                        </div>
 		                                                    </td>

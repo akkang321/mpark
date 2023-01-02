@@ -43,7 +43,7 @@
                         </li>
 
                         <li>
-                            <a href="/admin/getPartner" class="waves-effect">
+                            <a href="/admin/partnerList" class="waves-effect">
                                 <i class="ri-team-line"></i>
                                 <span>파트너스</span>
                             </a>
