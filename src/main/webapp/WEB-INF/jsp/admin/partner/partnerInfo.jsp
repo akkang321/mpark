@@ -41,7 +41,7 @@
                                             <div class="btm">
                                                 <div class="tabBox">
                                                     <button onclick="location.href='/admin/getPartner'" class="active">상세정보</button>
-                                                    <button onclick="location.href='#'">입출차</button>
+                                                    <button onclick="location.href='/admin/getParkingHistory'">입출차</button>
                                                     <button onclick="location.href='/admin/getParkingLots'">주차장 정보</button>
                                                     <button onclick="location.href='/admin/getMyPartners'">직원목록</button>
                                                 </div>

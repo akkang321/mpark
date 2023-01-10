@@ -38,10 +38,10 @@
                             <div class="PartnersDetailWrap">
                                 <div class="btm">
                                     <div class="tabBox">
-                                        <button onclick="location.href='partnersdetail_1.html'">상세정보</button>
-                                        <button onclick="location.href='partnersdetail_2.html'">입출차</button>
-                                        <button onclick="location.href='partnersdetail_3.html'">주차장 정보</button>
-                                        <button class="active" onclick="">직원목록</button>
+                                        <button onclick="location.href='/admin/getPartner'">상세정보</button>
+                                        <button onclick="location.href='/admin/getParkingHistory'">입출차</button>
+                                        <button onclick="location.href='/admin/getParkingLots'">주차장 정보</button>
+                                        <button onclick="location.href='/admin/getMyPartners'" class="active">직원목록</button>
                                     </div>
                                     <div class="PartnersDetailCon2">
                                     	<c:forEach var="list" items="${list}">
