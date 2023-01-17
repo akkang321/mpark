@@ -75,9 +75,8 @@ public class AdminPartnerController {
 	
 	// 파트너스 - 상세정보
 	@RequestMapping(value = {"/admin/getPartner"})
-	public ModelAndView getPartner(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv) throws JsonMappingException, JsonProcessingException {
-		Map<String,Object> param = new HashedMap();
-		param.put("PartnerBN", "3688100910"); 
+	public ModelAndView getPartner(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv, @RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
+		param.put("PartnerBN", StringUtil.nvl(param.get("partnerBN")));
 		
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetPartner", token, param);		// 승인 대기중인 파트너사들 URL 
 		int resultCode = responseEntity.getStatusCodeValue();

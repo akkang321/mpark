@@ -15,10 +15,20 @@
         $("#frm").attr("action", "/admin/partnerList");
         $("#frm").submit();
     }
+
+    function partnerInfo(partnerBN) {
+        $("#partnerBN").val(partnerBN);
+        $("#frm").attr("action", "/admin/getPartner");
+        $("#frm").submit();
+    }
+    
+    
+
 </script>
 
 
 <form id="frm" method="post" action="">
+    <input type="hidden" id="partnerBN" name="partnerBN">
     <div class="main-content">
 
         <div class="page-content">
@@ -125,7 +135,8 @@
 
                                             <div class="Search">
                                                 <div>
-                                                    <input type="text" name="PartnerName" id="PartnerName" value="${param.PartnerName}" placeholder="파트너 이름">
+                                                    <input type="text" name="PartnerName" id="PartnerName"
+                                                           value="${param.PartnerName}" placeholder="파트너 이름">
                                                     <p onclick="searchList()" id="Search">검색</p>
                                                 </div>
                                             </div>
@@ -149,18 +160,18 @@
                                                 </thead>
                                                 <tbody>
                                                 <c:forEach var="list" items="${list}">
-                                                <tr>
-                                                    <td>${list.PartnerName}</td>
-                                                    <td class="">${list.PhoneNumber}</td>
-                                                    <td class="">${list.OwnerEmail}</td>
-                                                    <td class="">${list.PartnerBN}</td>
-                                                    <td class="">${list.OwnerName}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td onclick="partnerInfo(${list.PartnerBN})">${list.PartnerName}</td>
+                                                        <td class="">${list.PhoneNumber}</td>
+                                                        <td class="">${list.OwnerEmail}</td>
+                                                        <td class="">${list.PartnerBN}</td>
+                                                        <td class="">${list.OwnerName}</td>
+                                                    </tr>
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <c:import url="page.jsp" />
+                                        <c:import url="page.jsp"/>
                                     </div>
                                 </div>
                             </div>
