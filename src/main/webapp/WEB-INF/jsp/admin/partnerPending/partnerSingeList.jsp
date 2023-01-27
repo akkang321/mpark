@@ -64,9 +64,7 @@
 									                <div>
 									                    <div>
 									
-									                        <button type="button"
-									                            class="btn btn-primary waves-effect waves-light"
-									                            id="sa-params">체크 하기</button>
+									                        <button type="button" class="btn btn-primary waves-effect waves-light" id="sa-params">체크 하기</button>
 									                    </div>
 									                </div>
 									            </div>

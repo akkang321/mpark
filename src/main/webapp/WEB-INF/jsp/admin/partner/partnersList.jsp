@@ -161,7 +161,7 @@
                                                 <tbody>
                                                 <c:forEach var="list" items="${list}">
                                                     <tr>
-                                                        <td onclick="partnerInfo(${list.PartnerBN})">${list.PartnerName}</td>
+                                                        <td onclick="partnerInfo(${list.PartnerBN})" class="active">${list.PartnerName}</td>
                                                         <td class="">${list.PhoneNumber}</td>
                                                         <td class="">${list.OwnerEmail}</td>
                                                         <td class="">${list.PartnerBN}</td>

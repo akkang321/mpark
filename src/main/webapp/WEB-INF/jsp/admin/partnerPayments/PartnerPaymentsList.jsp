@@ -98,7 +98,7 @@ function goPage(pageNo){
                                             <table>
                                                 <tr>
                                                     <td class="cursor  active client Wc2" onclick="">파트너스 목록</td>
-                                                    <td class="cursor client Wc2" onclick="location.href='calculate.html'">정산</td>
+                                                    <td class="cursor client Wc2">정산</td>
                                                 </tr>
                                             </table>
                                         </div>
