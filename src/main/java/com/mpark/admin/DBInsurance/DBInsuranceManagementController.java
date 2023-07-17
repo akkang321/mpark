@@ -92,6 +92,69 @@ public class DBInsuranceManagementController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value = {"/admin/getDBManagementTest"})
+	public ModelAndView getDBManagementTest(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
+		// 날짜 미입력시 최근 한달 조회
+		if (StringUtil.nvl(param.get("EndDate")).equals("")) {
+			param.put("StartDate", LocalDate.now().minusMonths(1).toString());
+			param.put("EndDate", LocalDate.now().toString());
+		}
+		
+		mv.addObject("StartDate",param.get("StartDate"));
+		mv.addObject("EndDate",param.get("EndDate"));
+		
+		// Keyword Error 처리
+		if (StringUtil.nvl(param.get("Keyword")).equals("")) {
+			param.put("Keyword", "");
+		}
+		
+		int tCnt = 0;
+		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetDBManagementCountTest", token, param);		// 
+		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
+		if (resultCodeCnt == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntityCnt.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			tCnt = Integer.parseInt(StringUtil.nvl(map.get("Count")));
+		}	
+		
+		PageUtil page = new PageUtil();
+		page.setPageNo(Integer.parseInt(StringUtil.nvl(param.get("pageNo"), "1")));
+		page.setPageSize(20); 
+		page.setTotalCount(tCnt);
+		param.put("CurrentIdx",page.getsCnt()); 
+		param.put("PageSize", page.getPageSize());
+		
+		mv.addObject("page", page);
+		
+		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagementTest", token, param); 
+		int resultCode = responseEntity.getStatusCodeValue();
+		mv.addObject("resultCode", resultCode);
+		
+		if (resultCode == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntity.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> list = (List<?>) map.get("Results");
+			mv.addObject("list", list);
+			mv.addObject("map", map);
+		}
+		
+		ResponseEntity<String> responseParkingLotEntity = RestTemplateUtil.sendPostRequest("GetAllParkingLotsTest", token, param);
+		int resultCodeParkingLot = responseParkingLotEntity.getStatusCodeValue();		
+		if (resultCodeParkingLot == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseParkingLotEntity.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> listParkingLot = (List<?>) map.get("Results");
+			mv.addObject("listParkingLot", listParkingLot);
+		}
+		
+		mv.setViewName("/admin/DBInsurance/DBInsuranceList");
+		
+		return mv;
+	}
 }
 
 
