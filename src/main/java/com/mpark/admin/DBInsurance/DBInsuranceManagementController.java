@@ -141,7 +141,7 @@ public class DBInsuranceManagementController {
 			mv.addObject("map", map);
 		}
 		
-		ResponseEntity<String> responseParkingLotEntity = RestTemplateUtil.sendPostRequest("GetAllParkingLotsTest", token, param);
+		ResponseEntity<String> responseParkingLotEntity = RestTemplateUtil.sendPostRequest("GetAllParkingLots", token, param);
 		int resultCodeParkingLot = responseParkingLotEntity.getStatusCodeValue();		
 		if (resultCodeParkingLot == 200) {
 			ObjectMapper mapper = new ObjectMapper();
