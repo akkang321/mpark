@@ -155,6 +155,42 @@ public class DBInsuranceManagementController {
 		
 		return mv;
 	}
+	
+
+	public ModelAndView getDBManagementExcel(HttpServletRequest request, @ModelAttribute("token") String token, ModelAndView mv,@RequestParam Map<String, Object> param) throws JsonMappingException, JsonProcessingException {
+		// 날짜 미입력시 최근 한달 조회
+		if (StringUtil.nvl(param.get("EndDate")).equals("")) {
+			param.put("StartDate", LocalDate.now().minusMonths(1).toString());
+			param.put("EndDate", LocalDate.now().toString());
+		}
+		
+		mv.addObject("StartDate",param.get("StartDate"));
+		mv.addObject("EndDate",param.get("EndDate"));
+		
+		// Keyword Error 처리
+		if (StringUtil.nvl(param.get("Keyword")).equals("")) {
+			param.put("Keyword", "");
+		}
+		param.put("pageNo", "0");
+		
+		
+		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagementExcel", token, param); 
+		int resultCode = responseEntity.getStatusCodeValue();
+		mv.addObject("resultCode", resultCode);
+		
+		if (resultCode == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntity.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			List<?> list = (List<?>) map.get("Results");
+			mv.addObject("list", list);
+			mv.addObject("map", map);
+		}
+		
+		mv.setViewName("/admin/DBInsurance/DBInsuranceList");
+		
+		return mv;
+	}
 }
 
 

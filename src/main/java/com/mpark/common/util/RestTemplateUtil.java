@@ -38,9 +38,15 @@ public static ResponseEntity<String>  sendPostRequest(String url, String token ,
 
 	HttpHeaders headers = new HttpHeaders();
 	headers.set("Content-Type", "application/json");
+	
+	
 	headers.set("Authorization", "Bearer "+token);
 
 	HttpEntity<Map<String, Object>> request = new HttpEntity<>(param, headers); 
+	
+	System.out.println(url);
+	System.out.println(request);
+	
 	ResponseEntity<String> responseEntity = restTemplate.postForEntity(apiUrl+url, request, String.class);	
 											
 	return responseEntity;

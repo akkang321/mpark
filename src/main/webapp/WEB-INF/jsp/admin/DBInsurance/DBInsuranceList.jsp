@@ -27,6 +27,13 @@ function table_close(){
 	$('#open_table').css('display','none');
 }
 
+function searchList(){
+	
+	$("#frm").attr("action","/admin/getDBManagementExcel");
+	$("#frm").submit();
+	
+}
+
 
 </script>
 <form id="frm" method="post" action="" >
@@ -45,10 +52,10 @@ function table_close(){
                                                 <p class="m-0">
                                                  	<input type="date"  id="StartDate" 	name="StartDate" value="${StartDate}" class="calendar" style="width: 120px;"> ~ 
                                                 	<input type="date"  id="EndDate"	name="EndDate"	 value="${EndDate}" class="calendar" style="width: 120px;">
-                                                	<input type="submit" value="검색">
-                                                	</p>
-                                                	
-                                                	
+                                                	 <input type="text" name="Keyword" id="Keyword" value="${param.Keyword}" placeholder="  주차장명 or 차량번호">
+                                                	<input type="button" onclick="searchList();" value="검색">
+                                                	<input type="button" onclick="excelDown();" value="엑셀다운">
+												</p>
                                             </div>
                                                                         
                                             <div class="insurance_Text_B ">
@@ -70,7 +77,7 @@ function table_close(){
                                                         <p class="m-0">${map.FinalEntranceAndExitCount}</p>
                                                     </div>
                                                 </div>
-                                                <div class="parking_1">
+                                                <div class="parking">
                                                     <div style="width: calc(100%/4);">
                                                         <p class="m-0">기본형 보험건수 : </p>
                                                         <p class="m-0">${map.AllATypeInsuranceCount}</p>
@@ -83,6 +90,9 @@ function table_close(){
                                                         <p class="m-0">총 보험료 :</p>
                                                         <p class="m-0">${map.AllInsuranceFee}</p>
                                                     </div>
+                                                     <div style="">
+                                                       
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +100,7 @@ function table_close(){
                         
                                     <div class="btm">
                         
-                                        <div id="subTabBox" class="subTabBox">
+                                        <%-- <div id="subTabBox" class="subTabBox">
                                             <div class="btn hide_1" onclick="Partners('N')" style="margin-right:20px ;">
                                                 <p>뒤로가기</p>
                                             </div>
@@ -102,7 +112,7 @@ function table_close(){
                                                     <p onclick="searchList()" id="Search">검색</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --%>
                         
                                         <div class="PartnersDetailCon2">
                                             <table class="insurance ">
