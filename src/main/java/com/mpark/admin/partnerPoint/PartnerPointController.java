@@ -134,7 +134,7 @@ public class PartnerPointController {
 			mv.addObject("map", map);
 		}
 		
-		mv.setViewName("/admin/partnerPoint/PartnersPoint");
+		mv.setViewName("/admin/partnerPoint/PartnersPointTest");
 		
 		return mv;
 	}

@@ -151,7 +151,7 @@ public class DBInsuranceManagementController {
 			mv.addObject("listParkingLot", listParkingLot);
 		}
 		
-		mv.setViewName("/admin/DBInsurance/DBInsuranceList");
+		mv.setViewName("/admin/DBInsurance/DBInsuranceListTest");
 		
 		return mv;
 	}
