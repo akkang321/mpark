@@ -173,6 +173,18 @@ public class DBInsuranceManagementController {
 		}
 		param.put("pageNo", "0");
 		
+		int tCnt = 0;
+		ResponseEntity<String> responseEntityCnt = RestTemplateUtil.sendPostRequest("GetDBManagementExcelCount", token, param);		// 
+		int resultCodeCnt = responseEntityCnt.getStatusCodeValue();
+		if (resultCodeCnt == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			String result = responseEntityCnt.getBody();
+			Map<String, Object> map = mapper.readValue(result, Map.class);
+			tCnt = Integer.parseInt(StringUtil.nvl(map.get("Count")));
+		}	
+		
+		
+		
 		
 		ResponseEntity<String> responseEntity = RestTemplateUtil.sendPostRequest("GetDBManagementExcel", token, param); 
 		int resultCode = responseEntity.getStatusCodeValue();
